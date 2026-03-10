@@ -1,8 +1,11 @@
 ---
+import { getMetadata } from "~/lib/constants";
 import LanguageSelector from "~/shared/language-selector.astro";
 import Cta from "~/shared/ui/cta.astro";
+const lang = Astro.currentLocale;
 
 const thisYear = new Date().getFullYear();
+const { contact } = getMetadata(lang);
 ---
 
 <footer
@@ -14,10 +17,10 @@ const thisYear = new Date().getFullYear();
     <ul class="grid md:grid-cols-2 gap-8 items-end">
       <li class="flex flex-col gap-4">
         <a
-          href="mailto:hey@tactil.studio"
+          href={`mailto:${contact.email}`}
           class="text-2xl md:text-5xl font-bold hover:opacity-80 transition-opacity"
         >
-          hey@tactil.studio
+          {contact.email}
         </a>
         <div class="flex items-center gap-3 text-sm">
           <p class="font-medium">© tactil {thisYear}</p>
