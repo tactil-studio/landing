@@ -1,10 +1,8 @@
 User-agent: *
 Allow: /
 
-# Disallow admin or private paths if any
 Disallow: /api/
 Disallow: /_astro/
 
-# Sitemap
-Sitemap: https://doscientos.com/sitemap-index.xml
+Sitemap: https://tactilstudio.com/sitemap.xml
 

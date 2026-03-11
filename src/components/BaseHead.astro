@@ -2,7 +2,7 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import { ClientRouter } from "astro:transitions";
-import { getMetadata } from "../lib/constants";
+import { baseUrl, getMetadata, siteUpdatedAt } from "../lib/constants";
 import "../styles/global.css";
 
 interface Props {
@@ -11,32 +11,94 @@ interface Props {
 	image?: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
-
-const metadata = getMetadata(Astro.currentLocale ?? "en");
+const locale = Astro.currentLocale ?? "en";
+const metadata = getMetadata(locale);
+const canonicalURL = new URL(Astro.url.pathname, baseUrl);
+const pathWithoutLocale = Astro.url.pathname.replace(/^\/(es|ca)(\/|$)/, "/");
+const alternateUrls = {
+	en: new URL(pathWithoutLocale, baseUrl),
+	es: new URL(
+		pathWithoutLocale === "/" ? "/es" : `/es${pathWithoutLocale}`,
+		baseUrl,
+	),
+	ca: new URL(
+		pathWithoutLocale === "/" ? "/ca" : `/ca${pathWithoutLocale}`,
+		baseUrl,
+	),
+};
 
 const {
 	title = metadata.title,
 	description = metadata.description,
 	image = "/thumbnail.png",
 } = Astro.props;
+
+const imageURL = new URL(image, baseUrl);
+
+const structuredData = [
+	{
+		"@context": "https://schema.org",
+		"@type": "Organization",
+		"@id": `${baseUrl}#organization`,
+		name: metadata.name,
+		alternateName: metadata.longName,
+		url: baseUrl,
+		logo: new URL(metadata.picture, baseUrl).toString(),
+		email: metadata.contact.email,
+		slogan: metadata.slogan,
+		sameAs: [metadata.links.linkedin, metadata.links.github].filter(Boolean),
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "WebSite",
+		"@id": `${baseUrl}#website`,
+		url: baseUrl,
+		name: metadata.longName,
+		description: metadata.description,
+		inLanguage: locale,
+		publisher: {
+			"@id": `${baseUrl}#organization`,
+		},
+	},
+	{
+		"@context": "https://schema.org",
+		"@type": "WebPage",
+		url: canonicalURL.toString(),
+		name: title,
+		description,
+		inLanguage: locale,
+		dateModified: siteUpdatedAt,
+		isPartOf: {
+			"@id": `${baseUrl}#website`,
+		},
+		about: {
+			"@id": `${baseUrl}#organization`,
+		},
+		primaryImageOfPage: imageURL.toString(),
+	},
+];
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="sitemap" href={new URL("sitemap.xml", baseUrl)} />
 <link
 	rel="alternate"
 	type="application/rss+xml"
 	title={title}
-	href={new URL("rss.xml", Astro.site)}
+	href={new URL("rss.xml", baseUrl)}
 />
 <meta name="generator" content={Astro.generator} />
+<meta name="robots" content="index,follow" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
+<link rel="alternate" hreflang="en" href={alternateUrls.en} />
+<link rel="alternate" hreflang="es" href={alternateUrls.es} />
+<link rel="alternate" hreflang="ca" href={alternateUrls.ca} />
+<link rel="alternate" hreflang="x-default" href={alternateUrls.en} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
@@ -45,15 +107,22 @@ const {
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:url" content={canonicalURL} />
+
+<meta property="og:site_name" content={metadata.longName} />
+
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:image" content={imageURL} />
+<meta property="og:image:alt" content={title} />
+<meta property="og:locale" content={locale} />
+<meta property="og:updated_time" content={siteUpdatedAt} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
+<meta property="twitter:url" content={canonicalURL} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta property="twitter:image" content={imageURL} />
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
 <ClientRouter />

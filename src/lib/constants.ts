@@ -1,10 +1,48 @@
+import { readdirSync, statSync } from "node:fs";
 import path from "node:path";
 
 export const paths = {
 	projects: path.join(process.cwd(), "src", "content", "projects"),
 };
 
-export const baseUrl = "https://tactil.digital";
+export const baseUrl = "https://tactilstudio.com";
+
+const freshnessPaths = [
+	path.join(process.cwd(), "astro.config.mjs"),
+	path.join(process.cwd(), "public"),
+	path.join(process.cwd(), "src", "app"),
+	path.join(process.cwd(), "src", "components"),
+	path.join(process.cwd(), "src", "content"),
+	path.join(process.cwd(), "src", "features"),
+	path.join(process.cwd(), "src", "pages"),
+	path.join(process.cwd(), "src", "shared"),
+];
+
+const getLatestModifiedTime = (targetPath: string): number => {
+	try {
+		const stats = statSync(targetPath);
+
+		if (stats.isDirectory()) {
+			return readdirSync(targetPath).reduce(
+				(latest, entry) =>
+					Math.max(latest, getLatestModifiedTime(path.join(targetPath, entry))),
+				stats.mtimeMs,
+			);
+		}
+
+		return stats.mtimeMs;
+	} catch {
+		return 0;
+	}
+};
+
+const latestModifiedTime = Math.max(
+	...freshnessPaths.map((targetPath) => getLatestModifiedTime(targetPath)),
+);
+
+export const siteUpdatedAt = new Date(
+	latestModifiedTime > 0 ? latestModifiedTime : Date.now(),
+).toISOString();
 
 export type Metadata = {
 	title: string;
@@ -31,9 +69,9 @@ export type Metadata = {
 export function getMetadata(locale = "en"): Metadata {
 	if (locale === "es") {
 		return {
-			title: "Tactil | Estudio Web y UX",
+			title: "Tactil | Estudio de diseño y desarrollo web",
 			description:
-				"Tactil.digital es un estudio de diseño y desarrollo web centrado en experiencias digitales elegantes, rápidas y escalables. Construido con código real, no plantillas o CMS genéricos.",
+				"Tactilstudio.com es un estudio de diseño y desarrollo web que crea experiencias digitales elegantes, rápidas y escalables con código a medida.",
 			name: "Tactil",
 			longName: "Tactil | Estudio Digital",
 			slogan: "Sitios web hechos a mano, construidos con código",
@@ -62,7 +100,7 @@ export function getMetadata(locale = "en"): Metadata {
 				email: "hello@tactilstudio.com",
 			},
 			links: {
-				website: "https://tactilstudio.com",
+				website: baseUrl,
 				twitter: "https://twitter.com/tactil-studio",
 				github: "https://github.com/tactil-studio",
 				linkedin: "https://www.linkedin.com/in/tactil-studio/",
@@ -74,9 +112,9 @@ export function getMetadata(locale = "en"): Metadata {
 
 	if (locale === "ca") {
 		return {
-			title: "Tactil | Estudi Web i UX",
+			title: "Tactil | Estudi de disseny i desenvolupament web",
 			description:
-				"Tactil.digital és un estudi de disseny i desenvolupament web centrat en experiències digitals elegants, ràpides i escalables. Construït amb codi real, no plantilles o CMS genèrics.",
+				"Tactilstudio.com és un estudi de disseny i desenvolupament web que crea experiències digitals elegants, ràpides i escalables amb codi a mida.",
 			name: "Tactil",
 			longName: "Tactil | Estudi Digital",
 			slogan: "Llocs web fets a mà, construïts amb codi",
@@ -105,7 +143,7 @@ export function getMetadata(locale = "en"): Metadata {
 				email: "hello@tactilstudio.com",
 			},
 			links: {
-				website: "https://tactilstudio.com",
+				website: baseUrl,
 				twitter: "https://twitter.com/tactil-studio",
 				github: "https://github.com/tactil-studio",
 				linkedin: "https://www.linkedin.com/in/tactil-studio/",
@@ -115,9 +153,9 @@ export function getMetadata(locale = "en"): Metadata {
 		};
 	}
 	return {
-		title: "Tactil | Web & UX Studio",
+		title: "Tactil | Web Design & Development Studio",
 		description:
-			"Tactil.digital is a web design and development studio focused on elegant, fast, and scalable digital experiences. Built with real code, not templates or generic CMSs.",
+			"Tactilstudio.com is a web design and development studio crafting elegant, fast, scalable digital experiences with custom code.",
 		name: "Tactil",
 		longName: "Tactil Digital Studio",
 		slogan: "Hand-crafted websites, built with code",
@@ -148,7 +186,7 @@ export function getMetadata(locale = "en"): Metadata {
 			email: "hello@tactilstudio.com",
 		},
 		links: {
-			website: "https://tactilstudio.com",
+			website: baseUrl,
 			twitter: "https://twitter.com/tactil-studio",
 			github: "https://github.com/tactil-studio",
 			linkedin: "https://www.linkedin.com/in/tactil-studio/",

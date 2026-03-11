@@ -43,9 +43,9 @@ export const server = {
                 <p style="white-space: pre-wrap; line-height: 1.6;">${message}</p>
               </div>
               
-              <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
-                <p>Este mensaje fue enviado desde el formulario de contacto de tactil.digital</p>
-              </div>
+				<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #666; font-size: 12px;">
+				  <p>Este mensaje fue enviado desde el formulario de contacto de tactilstudio.com</p>
+				</div>
             </div>
           `,
 				});

@@ -1,6 +1,5 @@
 // @ts-check
 import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
 import { defineConfig } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -13,7 +12,7 @@ import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://tactil.vercel.app',
+  site: 'https://tactilstudio.com',
   experimental: { headingIdCompat: true, contentIntellisense: true },
 
   output: 'server',
@@ -27,7 +26,7 @@ export default defineConfig({
       prefixDefaultLocale: false
     }
   },
-  integrations: [mdx(), sitemap(), metaTags(), react()],
+  integrations: [mdx(), metaTags(), react()],
 
   vite: {
     plugins: [tailwindcss()],

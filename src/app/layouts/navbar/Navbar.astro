@@ -2,16 +2,70 @@
 import LanguageSelector from "~/shared/language-selector.astro";
 import ThemeToggle from "~/shared/ui/theme/theme-toggle";
 const lang = Astro.currentLocale;
+const locale = lang === "es" || lang === "ca" ? lang : "en";
+
+const labels = {
+  en: {
+    work: "Work",
+    pricing: "Pricing",
+    faq: "FAQ",
+    projects: "Projects",
+  },
+  es: {
+    work: "Trabajos",
+    pricing: "Precios",
+    faq: "FAQ",
+    projects: "Proyectos",
+  },
+  ca: {
+    work: "Treballs",
+    pricing: "Preus",
+    faq: "FAQ",
+    projects: "Projectes",
+  },
+} as const;
+
+const withLocale = (path: string) => {
+  if (locale === "en") {
+    return path;
+  }
+
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
+};
+
+const navigationItems = [
+  { href: withLocale("/#portafolio"), label: labels[locale].work },
+  { href: withLocale("/#pricing"), label: labels[locale].pricing },
+  { href: withLocale("/#faq"), label: labels[locale].faq },
+  { href: withLocale("/projects"), label: labels[locale].projects },
+];
 ---
 
 <header
   class="z-40 fixed top-0 w-full items-center flex justify-between py-4 md:py-6 px-6 md:px-10 delayed-appearing"
 >
-  <div>
-    <strong
+  <div class="flex items-center gap-3">
+    <a
+      href={withLocale("/")}
+      aria-label="Tactil home"
       class="font-black text-2xl px-2 rounded-full bg-background/40 backdrop-blur-lg"
-      >tactil.</strong
     >
+      tactil.
+    </a>
+    <nav
+      class="hidden md:flex items-center gap-2 px-3 py-2 rounded-full bg-background/40 backdrop-blur-lg"
+    >
+      {
+        navigationItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm font-medium text-foreground/80 hover:text-foreground transition-colors"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
   </div>
   <div
     class="flex gap-2 items-center px-1 rounded-full bg-background/40 backdrop-blur-lg py-1"

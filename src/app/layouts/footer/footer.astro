@@ -3,9 +3,71 @@ import { getMetadata } from "~/lib/constants";
 import LanguageSelector from "~/shared/language-selector.astro";
 import Cta from "~/shared/ui/cta.astro";
 const lang = Astro.currentLocale;
+const locale = lang === "es" || lang === "ca" ? lang : "en";
 
 const thisYear = new Date().getFullYear();
-const { contact } = getMetadata(lang);
+const { contact, links } = getMetadata(locale);
+
+const labels = {
+  en: {
+    navigation: "Navigation",
+    resources: "Resources",
+    home: "Home",
+    projects: "Projects",
+    pricing: "Pricing",
+    faq: "FAQ",
+    sitemap: "Sitemap",
+    rss: "RSS feed",
+    linkedin: "LinkedIn",
+    github: "GitHub",
+  },
+  es: {
+    navigation: "Navegación",
+    resources: "Recursos",
+    home: "Inicio",
+    projects: "Proyectos",
+    pricing: "Precios",
+    faq: "FAQ",
+    sitemap: "Sitemap",
+    rss: "Feed RSS",
+    linkedin: "LinkedIn",
+    github: "GitHub",
+  },
+  ca: {
+    navigation: "Navegació",
+    resources: "Recursos",
+    home: "Inici",
+    projects: "Projectes",
+    pricing: "Preus",
+    faq: "FAQ",
+    sitemap: "Sitemap",
+    rss: "Feed RSS",
+    linkedin: "LinkedIn",
+    github: "GitHub",
+  },
+} as const;
+
+const withLocale = (path: string) => {
+  if (locale === "en") {
+    return path;
+  }
+
+  return path === "/" ? `/${locale}` : `/${locale}${path}`;
+};
+
+const navigationLinks = [
+  { href: withLocale("/"), label: labels[locale].home },
+  { href: withLocale("/projects"), label: labels[locale].projects },
+  { href: withLocale("/#pricing"), label: labels[locale].pricing },
+  { href: withLocale("/#faq"), label: labels[locale].faq },
+];
+
+const resourceLinks = [
+  { href: "/sitemap.xml", label: labels[locale].sitemap },
+  { href: "/rss.xml", label: labels[locale].rss },
+  { href: links.linkedin, label: labels[locale].linkedin, external: true },
+  { href: links.github, label: labels[locale].github, external: true },
+];
 ---
 
 <footer
@@ -14,7 +76,9 @@ const { contact } = getMetadata(lang);
   <div
     class="max-w-7xl px-6 xl:px-10 w-full mx-auto flex flex-col justify-end gap-8"
   >
-    <ul class="grid md:grid-cols-2 gap-8 items-end">
+    <ul
+      class="grid lg:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)] gap-8 items-start"
+    >
       <li class="flex flex-col gap-4">
         <a
           href={`mailto:${contact.email}`}
@@ -28,10 +92,52 @@ const { contact } = getMetadata(lang);
           <LanguageSelector />
         </div>
       </li>
-      <li class="flex md:justify-end">
-        <Cta />
+      <li class="grid sm:grid-cols-2 gap-8">
+        <div class="flex flex-col gap-4">
+          <strong class="text-sm uppercase tracking-wide text-foreground/70">
+            {labels[locale].navigation}
+          </strong>
+          <ul class="flex flex-col gap-2 text-sm">
+            {
+              navigationLinks.map((item) => (
+                <li>
+                  <a
+                    class="hover:opacity-70 transition-opacity"
+                    href={item.href}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+        <div class="flex flex-col gap-4">
+          <strong class="text-sm uppercase tracking-wide text-foreground/70">
+            {labels[locale].resources}
+          </strong>
+          <ul class="flex flex-col gap-2 text-sm">
+            {
+              resourceLinks.map((item) => (
+                <li>
+                  <a
+                    class="hover:opacity-70 transition-opacity"
+                    href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </li>
     </ul>
+    <div class="flex justify-start lg:justify-end">
+      <Cta />
+    </div>
   </div>
 </footer>
 
