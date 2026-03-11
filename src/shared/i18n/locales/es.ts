@@ -6,15 +6,10 @@ export const es: AllTranslationsKeys = {
 	summary:
 		"Una web que atrae clientes mientras duermes. Sin complicaciones, sin sorpresas. Solo resultados.",
 	getInTouch: "Hablemos",
-	ticketTitle:
-		"Tener una web <strong>no debería ser un dolor de cabeza</strong>",
-	ticketSubtitle:
-		"Pero muchos negocios pierden tiempo y dinero en webs que <strong>no les traen clientes</strong>",
 	total: "Total",
 	popular: "Popular",
 	lets_talk: "Hablemos",
 	your_current_web_receipt: "Tu recibo web actual",
-	ticketFooter: "¿Identificado? Ahí entramos nosotros",
 	want_to_see_my_proposal: "Quiero ver mi propuesta",
 	without_initial_commitment: "Sin compromiso inicial",
 	how_it_works: "Cómo funciona",

@@ -6,14 +6,10 @@ export const en = {
 	summary:
 		"Clean design, clear strategy and more clients for your business. Tell us your idea!",
 	getInTouch: "Get in touch",
-	ticketTitle: "Building a great site <strong>is hard</strong>",
-	ticketSubtitle:
-		"Burning money and time on websites that don't work <strong>is harder</strong>",
 	total: "Total",
 	lets_talk: "Let's talk",
 	popular: "Popular",
 	your_current_web_receipt: "Your current web receipt",
-	ticketFooter: "Identified? That's where we step in",
 	want_to_see_my_proposal: "I want to see my proposal",
 	without_initial_commitment: "Without initial commitment",
 	how_it_works: "How it works",

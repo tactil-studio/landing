@@ -6,14 +6,10 @@ export const ca: AllTranslationsKeys = {
 	summary:
 		"Un disseny net, una estratègia clara i més clients per al teu negoci. Explica'ns la teva idea!",
 	getInTouch: "Parlem",
-	ticketTitle: "Crear una gran web és <strong>difícil</strong>",
-	ticketSubtitle:
-		"Cremar diners i temps en webs que no funcionen és <strong>encara més difícil</strong>",
 	total: "Total",
 	popular: "Popular",
 	lets_talk: "Parlem",
 	your_current_web_receipt: "El teu rebut web actual",
-	ticketFooter: "Identificat? Aquí entrem nosaltres",
 	want_to_see_my_proposal: "Vull veure la meva proposta",
 	without_initial_commitment: "Sense compromís inicial",
 	how_it_works: "Com funciona",
