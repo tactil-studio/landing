@@ -1,8 +1,5 @@
 import { defineAction } from "astro:actions";
 import { z } from "astro:schema";
-import { Resend } from "resend";
-
-const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 export const server = {
 	sendContactEmail: defineAction({
@@ -17,11 +14,18 @@ export const server = {
 			const { name, email, phone, service, message } = input;
 
 			try {
-				const { data, error } = await resend.emails.send({
-					from: "Tactil Contact Form <hello@tactilstudio.com>",
-					to: ["hello@tactilstudio.com"],
-					subject: `Nuevo contacto: ${service || "Sin servicio especificado"}`,
-					html: `
+				// Usar fetch directo a la API de Resend para reducir el tamaño del bundle
+				const response = await fetch("https://api.resend.com/emails", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+						Authorization: `Bearer ${import.meta.env.RESEND_API_KEY}`,
+					},
+					body: JSON.stringify({
+						from: "Tactil Contact Form <hello@tactilstudio.com>",
+						to: ["hello@tactilstudio.com"],
+						subject: `Nuevo contacto: ${service || "Sin servicio especificado"}`,
+						html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
               <h2 style="color: #333; border-bottom: 2px solid #000; padding-bottom: 10px;">
                 Nuevo mensaje de contacto
@@ -48,12 +52,16 @@ export const server = {
 				</div>
             </div>
           `,
+					}),
 				});
 
-				if (error) {
+				if (!response.ok) {
+					const error = await response.json();
 					console.error("Resend error:", error);
 					throw new Error("Failed to send email");
 				}
+
+				const data = await response.json();
 
 				return {
 					success: true,
