@@ -18,8 +18,8 @@ export const server = {
 
 			try {
 				const { data, error } = await resend.emails.send({
-					from: "Tactil Contact Form <hola@tactilstudio.com>",
-					to: ["hola@tactilstudio.com"],
+					from: "Tactil Contact Form <hello@tactilstudio.com>",
+					to: ["hello@tactilstudio.com"],
 					subject: `Nuevo contacto: ${service || "Sin servicio especificado"}`,
 					html: `
             <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
