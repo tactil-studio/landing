@@ -11,5 +11,16 @@
 			"destination": "https://tactilstudio.com/$1",
 			"permanent": true
 		}
-	]
+	],
+	"functions": {
+		"api/**/*.ts": {
+			"maxDuration": 10,
+			"memory": 1024
+		}
+	},
+	"build": {
+		"env": {
+			"NODE_OPTIONS": "--max-old-space-size=4096"
+		}
+	}
 }

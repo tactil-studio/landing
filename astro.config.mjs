@@ -15,10 +15,8 @@ export default defineConfig({
   site: 'https://tactilstudio.com',
   experimental: { headingIdCompat: true, contentIntellisense: true },
 
-  output: 'server',
-  adapter: vercel({
-
-  }),
+  output: 'static',
+  adapter: vercel(),
   i18n: {
     locales: ["es", "en", "ca", "it"],
     defaultLocale: "en",

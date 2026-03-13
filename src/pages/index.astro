@@ -6,14 +6,13 @@ import StickyImages from "~/components/sticky-images/sticky-images.astro";
 import ContactSection from "~/features/sections/contact/ContactSection.astro";
 import FAQ from "~/features/sections/faq/FAQ.astro";
 import PricingSection from "~/features/sections/pricing/PricingSection.astro";
-
-export const prerender = false;
 ---
+
+<script src="../scripts/language-detection.ts"></script>
 
 <MainLayout>
   <Hero />
   <StickyImages />
-
 
   <ProjectsList />
   <PricingSection />
