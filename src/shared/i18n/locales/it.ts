@@ -1,19 +1,18 @@
 import type { AllTranslationsKeys } from "../types";
 
 export const it: AllTranslationsKeys = {
+	projects_subtitle:
+		"Dai un'occhiata ad alcuni dei nostri progetti più recenti",
 	title: "Genera più clienti su internet",
 	subtitle: "Semplice. Professionale. Che vende.",
 	summary:
 		"Un sito web che attira clienti mentre dormi. Senza complicazioni, senza sorprese. Solo risultati.",
 	getInTouch: "Parliamone",
-	ticketTitle: "Avere un sito web <strong>non dovrebbe essere un mal di testa</strong>",
-	ticketSubtitle:
-		"Ma molte aziende perdono tempo e denaro in siti web che <strong>non portano clienti</strong>",
+
 	total: "Totale",
 	popular: "Popolare",
 	lets_talk: "Parliamone",
 	your_current_web_receipt: "La tua ricevuta web attuale",
-	ticketFooter: "Ti riconosci? Ecco dove entriamo noi",
 	want_to_see_my_proposal: "Voglio vedere la mia proposta",
 	without_initial_commitment: "Senza impegno iniziale",
 	how_it_works: "Come funziona",
@@ -25,7 +24,8 @@ export const it: AllTranslationsKeys = {
 	card_4_title: "Veloce come un fulmine",
 
 	overpriced_wordpress_theme: "Template generico costoso",
-	template_that_doesnt_fit_your_brand: "Design che non rappresenta la tua attività",
+	template_that_doesnt_fit_your_brand:
+		"Design che non rappresenta la tua attività",
 	seo_plugins_that_dont_work: "Extra che promettono ma non funzionano",
 	opaque_hosting_provider: "Hosting che non capisci",
 	plugin_to_make_it_work: "Patch per farlo funzionare",
@@ -110,11 +110,9 @@ export const it: AllTranslationsKeys = {
 		"Raccontaci cosa ti serve. Ti rispondiamo in meno di 24 ore.",
 	contact_why_title: "Perché noi?",
 	contact_why_1_title: "Ti rispondiamo velocemente",
-	contact_why_1_desc:
-		"In meno di 24 ore saprai se possiamo aiutarti",
+	contact_why_1_desc: "In meno di 24 ore saprai se possiamo aiutarti",
 	contact_why_2_title: "Prima chiacchierata gratis",
-	contact_why_2_desc:
-		"Senza impegno. Parliamo solo della tua attività",
+	contact_why_2_desc: "Senza impegno. Parliamo solo della tua attività",
 	contact_why_3_title: "Fatto per te",
 	contact_why_3_desc:
 		"Non vendiamo template. Creiamo ciò di cui la tua attività ha bisogno",
@@ -142,4 +140,3 @@ export const it: AllTranslationsKeys = {
 	contact_error: "Errore nell'invio. Riprova.",
 	see_examples: "Vedi esempi",
 };
-
