@@ -152,6 +152,50 @@ export function getMetadata(locale = "en"): Metadata {
 			homeOgImage: "/assets/thumbnail.png",
 		};
 	}
+
+	if (locale === "it") {
+		return {
+			title: "Tactil | Studio di design e sviluppo web",
+			description:
+				"Tactilstudio.com è uno studio di design e sviluppo web che crea esperienze digitali eleganti, veloci e scalabili con codice personalizzato.",
+			name: "Tactil",
+			longName: "Tactil | Studio Digitale",
+			slogan: "Siti web fatti a mano, costruiti con codice",
+			picture: "/assets/branding/logo.png",
+			getInTouchLink: "https://forms.gle/J5xpGDUCiVSRS8Pc7",
+			tags: [
+				"Tactil Digital",
+				"Tactil",
+				"Studio Web",
+				"UX Design",
+				"Frontend Development",
+				"React",
+				"Astro",
+				"TailwindCSS",
+				"Custom Web Design",
+				"UI/UX",
+				"Barcelona",
+				"Italia",
+				"Landing Pages",
+				"Siti Web Aziendali",
+				"Dashboard",
+				"Design Accessibile",
+				"Ottimizzazione SEO",
+			],
+			contact: {
+				email: "hello@tactilstudio.com",
+			},
+			links: {
+				website: baseUrl,
+				twitter: "https://twitter.com/tactil-studio",
+				github: "https://github.com/tactil-studio",
+				linkedin: "https://www.linkedin.com/in/tactil-studio/",
+				email: "mailto:hello@tactilstudio.com",
+			},
+			homeOgImage: "/assets/thumbnail.png",
+		};
+	}
+
 	return {
 		title: "Tactil | Web Design & Development Studio",
 		description:

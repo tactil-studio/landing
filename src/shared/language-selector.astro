@@ -7,7 +7,7 @@ const lang = Astro.currentLocale;
 
 // Obtener la ruta actual sin el prefijo de idioma
 const currentPath = Astro.url.pathname;
-const pathWithoutLocale = currentPath.replace(/^\/(es|ca)(\/|$)/, "/");
+const pathWithoutLocale = currentPath.replace(/^\/(es|ca|it)(\/|$)/, "/");
 
 // Generar URLs para cada idioma
 const getLocalizedUrl = (localeCode: string) => {
