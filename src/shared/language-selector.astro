@@ -30,6 +30,7 @@ const getLocalizedUrl = (localeCode: string) => {
       <NativeSelectOption
         value={getLocalizedUrl(locale)}
         selected={lang === locale}
+        data-locale={locale}
       >
         {locale.toUpperCase()}
       </NativeSelectOption>
@@ -44,7 +45,17 @@ const getLocalizedUrl = (localeCode: string) => {
   if (languageSelector) {
     languageSelector.addEventListener("change", (e) => {
       const target = e.target as HTMLSelectElement;
+      const selectedOption = target.options[target.selectedIndex];
+      const locale = selectedOption.dataset.locale;
       const newUrl = target.value;
+
+      // Actualizar la cookie de preferencia de idioma
+      if (locale) {
+        const maxAge = 60 * 60 * 24 * 365; // 1 año
+        document.cookie = `preferred-locale=${locale}; path=/; max-age=${maxAge}; SameSite=Lax`;
+      }
+
+      // Navegar a la nueva URL
       window.location.href = newUrl;
     });
   }
