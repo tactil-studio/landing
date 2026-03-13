@@ -10,6 +10,7 @@ const projects = defineCollection({
 				en: z.string(),
 				es: z.string(),
 				ca: z.string(),
+				it: z.string(),
 			}),
 			available: z.boolean(),
 			startedAt: z.string().transform((str) => new Date(str)),

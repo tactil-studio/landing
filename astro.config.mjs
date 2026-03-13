@@ -23,7 +23,8 @@ export default defineConfig({
     locales: ["es", "en", "ca", "it"],
     defaultLocale: "en",
     routing: {
-      prefixDefaultLocale: false
+      prefixDefaultLocale: false,
+      redirectToDefaultLocale: false
     }
   },
   integrations: [mdx(), metaTags(), react()],
