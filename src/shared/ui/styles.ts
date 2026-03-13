@@ -66,7 +66,7 @@ export function getComponentStyles(
  * Input field styles
  */
 export const inputBaseStyles =
-	"px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all";
+	"px-4 py-3 rounded-lg border border-border bg-background text-foreground focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-all";
 
 /**
  * Label styles

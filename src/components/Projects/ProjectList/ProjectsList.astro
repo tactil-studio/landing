@@ -11,17 +11,20 @@ const { limit } = Astro.props;
 const projects = getProjects(limit);
 ---
 
-<section class="flex flex-col gap-16 py-24 px-4" id="portafolio">
-  <header class="flex flex-col gap-4 text-center">
+<section
+  class="flex flex-col gap-16 mx-auto max-w-7xl px-6 xl:px-10 h-full"
+  id="portafolio"
+>
+  <header class="flex flex-col gap-4">
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
       {t(l, "highlighted_projects")}
     </h2>
-    <p class="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-      Proyectos reales que generan resultados reales
+    <p class="text-base md:text-lg text-muted-foreground max-w-2xl">
+      {t(l, "projects_subtitle")}
     </p>
   </header>
 
-  <ul class="flex flex-col gap-24 max-w-7xl mx-auto w-full">
+  <ul class="flex flex-col gap-12 w-full h-full">
     {projects.map((p) => <ProjectListItem p={p} />)}
   </ul>
 </section>

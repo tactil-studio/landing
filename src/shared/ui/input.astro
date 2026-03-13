@@ -3,13 +3,14 @@
  * Input Component - Primitive UI component for form inputs
  */
 
+import type { HTMLInputTypeAttribute } from "react";
 import { inputBaseStyles, labelStyles } from "./styles";
 
 type Props = {
 	label?: string;
 	id: string;
 	name: string;
-	type?: string;
+	type?: HTMLInputTypeAttribute | null;
 	placeholder?: string;
 	required?: boolean;
 	class?: string;

@@ -21,7 +21,8 @@ export const ca: AllTranslationsKeys = {
 	card_4_title: "Rendiment òptim, sense trucs",
 
 	overpriced_wordpress_theme: "Tema de WordPress sobrevalorat",
-	template_that_doesnt_fit_your_brand: "Plantilla que no encaixa amb la teva marca",
+	template_that_doesnt_fit_your_brand:
+		"Plantilla que no encaixa amb la teva marca",
 	seo_plugins_that_dont_work: "Plugins de SEO que no funcionen",
 	opaque_hosting_provider: "Proveïdor d'hosting opac",
 	plugin_to_make_it_work: "Plugin perquè funcioni",
@@ -30,6 +31,7 @@ export const ca: AllTranslationsKeys = {
 	unclear_maintenance_costs: "Costos de manteniment poc clars",
 	time_lost: "Temps perdut",
 	highlighted_projects: "Projectes destacats",
+	projects_subtitle: "Projectes reals que generen resultats reals",
 
 	// pricing
 	prices_subtitle: "Solucions adaptades a cada necessitat i pressupost",
@@ -68,11 +70,12 @@ export const ca: AllTranslationsKeys = {
 	faq_title: "Preguntes Freqüents",
 	faq_subtitle: "Tot el que necessites saber sobre els nostres serveis",
 
-	faq_q1_question: "Quin tipus de projectes digitals realitzeu?",
+	faq_q1_question: "Què feu exactament?",
 	faq_q1_answer:
-		"Ens especialitzem en crear solucions digitals completes: des de pàgines web i botigues online fins a aplicacions personalitzades i sistemes d'automatització. També oferim serveis de SEO, consultoria estratègica i manteniment continu perquè el teu projecte creixi amb el temps.",
+		"Creem webs des de zero amb codi personalitzat. Res de plantilles genèriques. Cada web està feta específicament per al teu negoci: des d'una pàgina simple fins a una botiga online completa. També t'ajudem a que et trobin a Google.",
 
-	faq_q2_question: "Quant de temps necessiteu per desenvolupar el meu projecte?",
+	faq_q2_question:
+		"Quant de temps necessiteu per desenvolupar el meu projecte?",
 	faq_q2_answer:
 		"Depèn de l'abast del projecte. Una landing page pot estar llesta en 5-7 dies, un lloc corporatiu en 2-3 setmanes, i una botiga online completa en 3-4 setmanes. Et proporcionarem un cronograma detallat després de la nostra primera reunió, adaptat als teus terminis i necessitats.",
 
@@ -96,9 +99,9 @@ export const ca: AllTranslationsKeys = {
 	faq_q7_answer:
 		"Sí, sempre. Comencem amb una consultoria gratuïta on analitzem els teus objectius, públic i pressupost. Et recomanem la millor solució tècnica i estratègia digital per al teu cas específic, sense cap compromís.",
 
-	faq_q8_question: "Amb quines tecnologies treballeu?",
+	faq_q8_question: "Feu servir plantilles o WordPress?",
 	faq_q8_answer:
-		"Seleccionem la tecnologia segons les necessitats de cada projecte: React, Astro, Next.js per a desenvolupaments moderns i ràpids; WordPress per a llocs autogestionables; Shopify per a e-commerce escalable. Sempre prioritzem rendiment, seguretat i facilitat de manteniment.",
+		"No. Creem cada web des de zero amb codi personalitzat. Així ens assegurem que s'adapta 100% al teu negoci, és ràpida i fa exactament el que necessites. Sense limitacions de plantilles.",
 
 	// Contact form
 	contact_title: "Parlem del teu projecte",
@@ -138,4 +141,3 @@ export const ca: AllTranslationsKeys = {
 	contact_error: "Error en enviar. Torna-ho a provar.",
 	see_examples: "Veure exemples",
 };
-

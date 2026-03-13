@@ -36,6 +36,8 @@ export function Select({
 				className={cn(
 					inputBaseStyles,
 					"cursor-pointer",
+					"[&>option]:bg-background [&>option]:text-foreground",
+					"dark:[&>option]:bg-gray-900 dark:[&>option]:text-white",
 					error && "border-red-500",
 					className,
 				)}

@@ -32,7 +32,7 @@ export const en = {
 	unclear_maintenance_costs: "Unclear maintenance costs",
 	time_lost: "Time lost",
 	highlighted_projects: "Highlighted projects",
-
+	projects_subtitle: "Real projects that generate real results",
 	// pricing
 	prices_subtitle: "Solutions tailored to every need and budget",
 	pack_1_title: "Corporate website",
@@ -70,9 +70,9 @@ export const en = {
 	faq_title: "Frequently Asked Questions",
 	faq_subtitle: "Everything you need to know about our services",
 
-	faq_q1_question: "What kind of digital projects do you create?",
+	faq_q1_question: "What do you do exactly?",
 	faq_q1_answer:
-		"We specialize in complete digital solutions: from websites and online stores to custom applications and automation systems. We also offer SEO services, strategic consulting, and ongoing maintenance so your project grows over time.",
+		"We build websites from scratch with custom code. No generic templates. Every website is made specifically for your business: from a simple page to a complete online store. We also help you get found on Google.",
 
 	faq_q2_question: "How long does it take to develop my project?",
 	faq_q2_answer:
@@ -98,9 +98,9 @@ export const en = {
 	faq_q7_answer:
 		"Yes, always. We start with a free consultation where we analyze your goals, audience, and budget. We recommend the best technical solution and digital strategy for your specific case, with no commitment.",
 
-	faq_q8_question: "What technologies do you work with?",
+	faq_q8_question: "Do you use templates or WordPress?",
 	faq_q8_answer:
-		"We select technology based on each project's needs: React, Astro, Next.js for modern and fast developments; WordPress for self-manageable sites; Shopify for scalable e-commerce. We always prioritize performance, security, and ease of maintenance.",
+		"No. We build every website from scratch with custom code. This ensures it adapts 100% to your business, loads fast, and does exactly what you need. No template limitations.",
 
 	// Contact form
 	contact_title: "Let's talk about your project",

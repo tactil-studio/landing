@@ -26,7 +26,13 @@ const {
 	...rest
 } = Astro.props;
 
-const selectClasses = [inputBaseStyles, "cursor-pointer", className]
+const selectClasses = [
+	inputBaseStyles,
+	"cursor-pointer",
+	"[&>option]:bg-background [&>option]:text-foreground",
+	"dark:[&>option]:bg-gray-900 dark:[&>option]:text-white",
+	className,
+]
 	.filter(Boolean)
 	.join(" ");
 const labelClasses = [labelStyles, labelClass].filter(Boolean).join(" ");

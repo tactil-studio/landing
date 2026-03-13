@@ -30,7 +30,7 @@ export const es: AllTranslationsKeys = {
 	unclear_maintenance_costs: "Gastos sorpresa cada mes",
 	time_lost: "Tu tiempo perdido",
 	highlighted_projects: "Proyectos destacados",
-
+	projects_subtitle: "Proyectos reales que generan resultados reales",
 	// pricing
 	prices_subtitle: "Elige el que mejor se adapte a tu negocio",
 	pack_1_title: "Web para tu negocio",
@@ -70,7 +70,7 @@ export const es: AllTranslationsKeys = {
 
 	faq_q1_question: "¿Qué hacéis exactamente?",
 	faq_q1_answer:
-		"Creamos webs que ayudan a tu negocio a vender más. Desde una página simple hasta una tienda online completa. También te ayudamos a que te encuentren en Google y mantenemos todo funcionando sin que tengas que preocuparte.",
+		"Creamos webs desde cero con código personalizado. Nada de plantillas genéricas. Cada web está hecha específicamente para tu negocio: desde una página simple hasta una tienda online completa. También te ayudamos a que te encuentren en Google.",
 
 	faq_q2_question: "¿Cuánto tarda en estar lista mi web?",
 	faq_q2_answer:
@@ -96,9 +96,9 @@ export const es: AllTranslationsKeys = {
 	faq_q7_answer:
 		"Claro. La primera charla es gratis y sin compromiso. Te explicamos qué necesitas, cuánto cuesta y cuánto tarda. Sin tecnicismos, sin presión.",
 
-	faq_q8_question: "¿Usáis WordPress o algo así?",
+	faq_q8_question: "¿Usáis plantillas o WordPress?",
 	faq_q8_answer:
-		"Depende de lo que necesites. Si quieres cambiar cosas tú mismo, sí. Si quieres algo súper rápido y moderno, usamos tecnología más avanzada. Te explicamos las opciones y tú decides.",
+		"No. Creamos cada web desde cero con código personalizado. Así nos aseguramos de que se adapta 100% a tu negocio, es rápida y hace exactamente lo que necesitas. Sin limitaciones de plantillas.",
 
 	// Contact form
 	contact_title: "¿Hablamos de tu negocio?",

@@ -21,7 +21,7 @@ const getLocalizedUrl = (localeCode: string) => {
 <NativeSelect
   size="sm"
   id="language-selector"
-  class="appearance-none bg-transparent border border-black/20 rounded-md px-3 py-1 pr-8 text-sm cursor-pointer hover:border-black/40 transition-colors focus:outline-none focus:ring-2 focus:ring-black/20"
+  class="appearance-none bg-background text-foreground border border-border rounded-md px-3 py-1 pr-8 text-sm cursor-pointer hover:border-primary/40 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/20 [&>option]:bg-background [&>option]:text-foreground dark:[&>option]:bg-gray-900 dark:[&>option]:text-white"
   aria-label="Select language"
   data-current-locale={lang}
 >

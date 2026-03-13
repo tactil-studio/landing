@@ -9,6 +9,7 @@ const projects = defineCollection({
 			summary: z.object({
 				en: z.string(),
 				es: z.string(),
+				ca: z.string(),
 			}),
 			available: z.boolean(),
 			startedAt: z.string().transform((str) => new Date(str)),
