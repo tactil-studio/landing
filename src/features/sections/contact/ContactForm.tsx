@@ -1,4 +1,3 @@
-import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
 import { Button } from "~/shared/ui/button";
 import { Input } from "~/shared/ui/input";
@@ -108,9 +107,15 @@ export default function ContactForm({ translations }: ContactFormProps) {
 		setStatus("sending");
 
 		try {
-			const { data, error } = await actions.sendContactEmail(formData);
+			const response = await fetch("/api/contact", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formData),
+			});
 
-			if (!error) {
+			if (response.ok) {
 				setStatus("success");
 				setFormData({
 					name: "",
@@ -121,7 +126,7 @@ export default function ContactForm({ translations }: ContactFormProps) {
 				});
 				setTimeout(() => setStatus("idle"), 5000);
 			} else {
-				console.error("Action error:", error);
+				console.error("API error:", await response.text());
 				setStatus("error");
 				setTimeout(() => setStatus("idle"), 5000);
 			}
