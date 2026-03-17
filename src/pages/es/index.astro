@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import MainLayout from "~/app/layouts/MainLayout.astro";
 import Hero from "~/components/Layout/hero.astro";
 import ProjectsList from "~/components/Projects/ProjectList/ProjectsList.astro";
@@ -11,7 +13,6 @@ import PricingSection from "~/features/sections/pricing/PricingSection.astro";
 <MainLayout>
   <Hero />
   <StickyImages />
-
 
   <ProjectsList />
   <PricingSection />

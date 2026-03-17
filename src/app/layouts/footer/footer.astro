@@ -1,11 +1,8 @@
 ---
 import { getMetadata } from "~/lib/constants";
-import LanguageSelector from "~/shared/language-selector.astro";
-import Cta from "~/shared/ui/cta.astro";
 const lang = Astro.currentLocale;
-const locale = lang === "es" || lang === "ca" ? lang : "en";
+const locale = lang === "es" || lang === "ca" || lang === "it" ? lang : "en";
 
-const thisYear = new Date().getFullYear();
 const { contact, links } = getMetadata(locale);
 
 const labels = {
@@ -39,6 +36,18 @@ const labels = {
     home: "Inici",
     projects: "Projectes",
     pricing: "Preus",
+    faq: "FAQ",
+    sitemap: "Sitemap",
+    rss: "Feed RSS",
+    linkedin: "LinkedIn",
+    github: "GitHub",
+  },
+  it: {
+    navigation: "Navigazione",
+    resources: "Risorse",
+    home: "Home",
+    projects: "Progetti",
+    pricing: "Prezzi",
     faq: "FAQ",
     sitemap: "Sitemap",
     rss: "Feed RSS",
@@ -132,4 +141,3 @@ const resourceLinks = [
     </ul>
   </div>
 </footer>
-

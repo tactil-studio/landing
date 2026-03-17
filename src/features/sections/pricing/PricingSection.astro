@@ -60,7 +60,7 @@ const pricingPacks: Pricing[] = [
 
 <section
   id="pricing"
-  class="flex flex-col gap-12 py-24 px-4 mx-auto max-w-7xl px-6 xl:px-10"
+  class="flex flex-col gap-12 py-24 px-4 mx-auto max-w-7xl xl:px-10"
 >
   <header class="flex flex-col gap-4 text-center">
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
@@ -137,80 +137,15 @@ const pricingPacks: Pricing[] = [
             </ul>
           </div>
           <footer class="flex gap-2 items-center pt-4">
-            <button
-              type="button"
-              data-service-id={pricing.id}
+            <a
+              href="#contact"
               class="pricing-cta w-full text-center rounded-full bg-primary px-6 py-3 text-background font-semibold hover:brightness-95 active:scale-[0.98] transition-all shadow-sm hover:shadow-md"
             >
               {t(pricing.cta)}
-            </button>
+            </a>
           </footer>
         </li>
       ))
     }
   </ul>
 </section>
-
-<script>
-  // Manejar clicks en los CTAs de pricing
-  function handlePricingClick(e: Event) {
-    const button = e.currentTarget as HTMLButtonElement;
-    const serviceId = button.dataset.serviceId;
-
-    if (!serviceId) return;
-
-    console.log("Pricing button clicked:", serviceId);
-
-    // Actualizar la URL con el parámetro de servicio
-    const url = new URL(window.location.href);
-    url.searchParams.set("service", serviceId);
-    window.history.replaceState({}, "", url.toString());
-
-    console.log("URL updated:", url.toString());
-
-    // Disparar evento para que el formulario se actualice
-    window.dispatchEvent(new Event("popstate"));
-
-    // Hacer scroll al formulario de contact con un pequeño delay
-    requestAnimationFrame(() => {
-      const contactSection = document.getElementById("contact");
-      console.log("Contact section found:", contactSection);
-
-      if (contactSection) {
-        const yOffset = -80; // Offset para navbar si existe
-        const y =
-          contactSection.getBoundingClientRect().top +
-          window.pageYOffset +
-          yOffset;
-
-        window.scrollTo({
-          top: y,
-          behavior: "smooth",
-        });
-      }
-    });
-  }
-
-  function initPricingCTAs() {
-    const pricingCTAs =
-      document.querySelectorAll<HTMLButtonElement>(".pricing-cta");
-    console.log("Initializing pricing CTAs:", pricingCTAs.length);
-
-    pricingCTAs.forEach((cta) => {
-      // Remover listener anterior si existe
-      cta.removeEventListener("click", handlePricingClick);
-      // Añadir nuevo listener
-      cta.addEventListener("click", handlePricingClick);
-    });
-  }
-
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initPricingCTAs);
-  } else {
-    initPricingCTAs();
-  }
-
-  // Re-inicializar después de navegación (para Astro View Transitions)
-  document.addEventListener("astro:page-load", initPricingCTAs);
-</script>
