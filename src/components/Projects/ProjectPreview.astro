@@ -13,7 +13,7 @@ const { data, id: _slug } = project;
 const { title, category, media } = data;
 ---
 
-<div class="group w-full relative flex flex-col items-center gap-20 pb-20">
+<div class="group w-full relative flex flex-col items-center gap-20 pb-20 max-md:gap-8 max-md:pb-8">
   <header
     class="grid lg:grid-cols-2 gap-4 max-w-7xl w-full items-center max-xl:px-6"
   >
@@ -103,6 +103,7 @@ const { title, category, media } = data;
   .image-sizing {
     /* background-color: var(--color-primary); */
     width: auto;
+    max-width: 85vw;
     height: 100%;
     object-fit: contain;
     transition: all 0.3s ease-in-out;
