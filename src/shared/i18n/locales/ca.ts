@@ -140,4 +140,19 @@ export const ca: AllTranslationsKeys = {
 	contact_success: "Missatge enviat! Et respondrem aviat.",
 	contact_error: "Error en enviar. Torna-ho a provar.",
 	see_examples: "Veure exemples",
+
+	// 404
+	not_found_title: "Pàgina no trobada",
+	not_found_description:
+		"Sembla que aquesta pàgina no existeix o ha estat moguda. Aquí tens alguns enllaços útils.",
+	not_found_back: "Tornar a l'inici",
+	not_found_contact_prompt: "Creus que és un error?",
+	not_found_contact_link: "Contacta'ns",
+	nav_home: "Inici",
+	nav_projects: "Projectes",
+	nav_contact: "Contacte",
+
+	// Contact page
+	contact_page_title: "Contacte",
+	contact_page_description: "Escriu-nos i et respondrem en menys de 24 hores.",
 };

@@ -75,7 +75,7 @@ export const server = {
 				timeZone: "Europe/Madrid",
 			});
 			const isoTimestamp = now.toISOString();
- 
+
 			try {
 				// 1. Enviar email con Resend
 				const { data: emailData, error: emailError } = await resend.emails.send(

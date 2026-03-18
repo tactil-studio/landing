@@ -15,7 +15,12 @@ const projects = getProjects(limit);
   class="flex flex-col gap-16 max-md:gap-8 mx-auto max-w-7xl px-6 xl:px-10 h-full"
   id="portafolio"
 >
-  <header class="flex flex-col gap-4">
+  <header
+    class="flex flex-col gap-4"
+    data-reveal="bottom"
+    data-speed="normal"
+    data-easing="soft"
+  >
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
       {t(l, "highlighted_projects")}
     </h2>
@@ -24,7 +29,7 @@ const projects = getProjects(limit);
     </p>
   </header>
 
-  <ul class="flex flex-col gap-12 w-full h-full">
+  <ul class="flex flex-col gap-12 w-full h-full" data-stagger="150">
     {projects.map((p) => <ProjectListItem p={p} />)}
   </ul>
 </section>

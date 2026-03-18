@@ -1,0 +1,155 @@
+---
+export const prerender = true;
+import MainLayout from "~/app/layouts/MainLayout.astro";
+import { getMetadata } from "~/lib/constants";
+
+const { name, links } = getMetadata("en");
+const lastUpdated = "March 18, 2025";
+---
+
+<MainLayout
+  title={"Cookie Policy"}
+  description="Information about the cookies we use on our website and how you can manage them."
+>
+  <main class="w-full max-w-4xl mx-auto px-6 xl:px-10 py-20">
+    <div class="mb-10">
+      <a
+        href="/"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Back to home
+      </a>
+    </div>
+
+    <article class="prose prose-neutral max-w-none">
+      <h1>Cookie Policy</h1>
+      <p class="text-muted-foreground text-sm">Last updated: {lastUpdated}</p>
+
+      <p>
+        This website, operated by <strong>{name}</strong>, uses cookies and
+        similar technologies to improve the browsing experience, analyse traffic
+        and provide basic functionality. Below we explain what cookies are, what
+        types we use and how you can manage them.
+      </p>
+
+      <h2>1. What are cookies?</h2>
+      <p>
+        Cookies are small text files that websites store on your device when you
+        visit them. They allow us to remember information about your visit, such
+        as your language or theme preference (light/dark), making navigation
+        easier and the site more useful on future visits.
+      </p>
+
+      <h2>2. Types of cookies we use</h2>
+
+      <h3>2.1 Technical cookies (strictly necessary)</h3>
+      <p>
+        These are essential for the correct functioning of the website. Without
+        them, some services or features would not be available.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Purpose</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>theme</code></td>
+            <td>Stores the user's theme preference (light/dark).</td>
+            <td>Persistent (localStorage)</td>
+          </tr>
+          <tr>
+            <td><code>locale</code></td>
+            <td>Stores the user's language preference.</td>
+            <td>1 year</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2.2 Analytical cookies</h3>
+      <p>
+        These allow us to count visits and analyse traffic to improve the
+        website's performance and content. All information collected is
+        anonymous.
+      </p>
+      <p>
+        This site may make use of third-party web analytics tools. If we
+        incorporate them, we will inform you in this policy and request your
+        consent when necessary.
+      </p>
+
+      <h2>3. Third-party cookies</h2>
+      <p>
+        Some content or functionality on the site may be provided by third
+        parties (e.g. embedded videos or maps). These third parties may set
+        their own cookies. We have no control over these cookies and recommend
+        you consult their own privacy policies.
+      </p>
+
+      <h2>4. How to manage cookies?</h2>
+      <p>
+        You can configure your browser to accept, reject or delete cookies at
+        any time. Please note that disabling certain cookies may affect the
+        functioning of the site.
+      </p>
+      <p>Instructions for the most common browsers:</p>
+      <ul>
+        <li>
+          <a
+            href="https://support.google.com/chrome/answer/95647"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google Chrome
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Mozilla Firefox
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.apple.com/en-us/guide/safari/sfri11471/mac"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Safari
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.microsoft.com/en-us/windows/delete-and-manage-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Microsoft Edge
+          </a>
+        </li>
+      </ul>
+
+      <h2>5. Updates to this policy</h2>
+      <p>
+        We may update this cookie policy when necessary. The current version
+        will always be available on this page with the date of the last update.
+        We recommend reviewing it periodically.
+      </p>
+
+      <h2>6. Contact</h2>
+      <p>
+        If you have any questions about our cookie policy, you can contact us at{
+          " "
+        }
+        <a href={links.email}>{links.email.replace("mailto:", "")}</a>.
+      </p>
+    </article>
+  </main>
+</MainLayout>
+

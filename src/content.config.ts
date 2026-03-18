@@ -18,15 +18,9 @@ const projects = defineCollection({
 				.string()
 				.transform((str) => new Date(str))
 				.optional(),
-			color: z.string(),
-			link: z.string().optional(),
-			githubLink: z.string().optional(),
-			npmCommand: z.string().optional(),
-			npmLink: z.string().optional(),
-			// mp4s or webps
+			link: z.string().optional(),			// mp4s or webps
 			media: z.array(image().or(z.string())),
 			category: z.string(),
-			tech: z.array(z.string()).optional(),
 		}),
 });
 

@@ -135,4 +135,19 @@ export const es: AllTranslationsKeys = {
 	contact_success: "¡Mensaje enviado! Te responderemos pronto.",
 	contact_error: "Error al enviar. Inténtalo de nuevo.",
 	see_examples: "Ver ejemplos",
+
+	// 404
+	not_found_title: "Página no encontrada",
+	not_found_description:
+		"Parece que esta página no existe o ha sido movida. Aquí tienes algunos enlaces útiles.",
+	not_found_back: "Volver al inicio",
+	not_found_contact_prompt: "¿Crees que esto es un error?",
+	not_found_contact_link: "Contáctanos",
+	nav_home: "Inicio",
+	nav_projects: "Proyectos",
+	nav_contact: "Contacto",
+
+	// Contact page
+	contact_page_title: "Contacto",
+	contact_page_description: "Escríbenos y te respondemos en menos de 24 horas.",
 };

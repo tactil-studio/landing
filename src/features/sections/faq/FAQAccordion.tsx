@@ -3,7 +3,7 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "~/shared/ui/accordion";
+} from "~/shared/ui/react/accordion";
 
 interface FAQItem {
   question: string;

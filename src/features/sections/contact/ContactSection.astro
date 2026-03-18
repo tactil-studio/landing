@@ -34,7 +34,12 @@ const translations = {
   id="contact"
   class="flex flex-col gap-16 max-md:gap-8 py-12 w-full max-w-7xl mx-auto px-4"
 >
-  <header class="flex flex-col gap-4 text-center">
+  <header
+    class="flex flex-col gap-4 text-center"
+    data-reveal="bottom"
+    data-speed="normal"
+    data-easing="soft"
+  >
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
       {t("contact_title")}
     </h2>
@@ -48,10 +53,16 @@ const translations = {
   <ul class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
     <li
       class="bg-background border border-border rounded-2xl p-8 md:p-10 shadow-lg"
+      data-reveal="left"
+      data-easing="soft"
     >
-      <ContactForm client:load  />
+      <ContactForm client:load />
     </li>
-    <li class="flex flex-col gap-8 lg:sticky lg:top-32">
+    <li
+      class="flex flex-col gap-8 lg:sticky lg:top-32"
+      data-reveal="right"
+      data-easing="soft"
+    >
       <div class="bg-muted/50 rounded-2xl p-8 md:p-10 border border-border">
         <h3 class="text-xl font-semibold mb-6">{t("contact_why_title")}</h3>
         <ul class="flex flex-col gap-6">

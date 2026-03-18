@@ -1,0 +1,115 @@
+---
+export const prerender = true;
+import MainLayout from "~/app/layouts/MainLayout.astro";
+import { getMetadata } from "~/lib/constants";
+
+const { name, links } = getMetadata("en");
+const lastUpdated = "March 18, 2025";
+---
+
+<MainLayout
+  title={"Legal Notice"}
+  description="Legal notice and information about the ownership and terms of use of this website."
+>
+  <main class="w-full max-w-4xl mx-auto px-6 xl:px-10 py-20">
+    <div class="mb-10">
+      <a
+        href="/"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Back to home
+      </a>
+    </div>
+
+    <article class="prose prose-neutral max-w-none">
+      <h1>Legal Notice</h1>
+      <p class="text-muted-foreground text-sm">Last updated: {lastUpdated}</p>
+
+      <p>
+        In compliance with applicable regulations on information society
+        services and electronic commerce, we inform you of the identifying
+        details of the owner of this website.
+      </p>
+
+      <h2>1. Owner details</h2>
+      <ul>
+        <li><strong>Owner:</strong> {name}</li>
+        <li>
+          <strong>Email:</strong>{" "}
+          <a href={links.email}>{links.email.replace("mailto:", "")}</a>
+        </li>
+        <li>
+          <strong>Website:</strong>{" "}
+          <a href={links.website} target="_blank" rel="noopener noreferrer"
+            >{links.website}</a
+          >
+        </li>
+        <li><strong>Location:</strong> Barcelona, Spain</li>
+      </ul>
+
+      <h2>2. Purpose</h2>
+      <p>
+        This legal notice governs access to and use of the website{" "}
+        <a href={links.website} target="_blank" rel="noopener noreferrer"
+          >{links.website}</a
+        >, which {name} makes available to internet users in order to provide
+        information about its web design, custom development and digital
+        consultancy services.
+      </p>
+
+      <h2>3. Terms of use</h2>
+      <p>
+        Accessing and using this website implies acceptance of these terms. The
+        user undertakes to make appropriate use of the available content and
+        services, and not to use them for unlawful activities or those contrary
+        to good faith or public order.
+      </p>
+      <p>
+        {name} reserves the right to modify, suspend or remove the website, as
+        well as any content or services it incorporates, without prior notice.
+      </p>
+
+      <h2>4. Intellectual and industrial property</h2>
+      <p>
+        All content on this website — including, without limitation, texts,
+        images, graphics, logos, icons, source code and design — is the property
+        of {name} or of third parties who have authorised its use, and is
+        protected by national and international intellectual and industrial
+        property law.
+      </p>
+      <p>
+        Reproduction, distribution, public communication or transformation of
+        any element of this website without the prior written authorisation of
+        its owner is expressly prohibited, unless the law expressly permits it.
+      </p>
+
+      <h2>5. Disclaimer</h2>
+      <p>
+        {name} is not liable for any damages that may arise from the use of this
+        website, nor for any inaccuracies or outdated content. It does not
+        guarantee the continuous availability of the site or the absence of
+        technical errors.
+      </p>
+      <p>
+        Links to third-party websites that may appear on this site are provided
+        for informational purposes only. {name} does not control those sites and
+        assumes no responsibility for their content or privacy policies.
+      </p>
+
+      <h2>6. Applicable law and jurisdiction</h2>
+      <p>
+        These terms are governed by Spanish law. For the resolution of any
+        dispute arising from the use of this website, the parties submit to the
+        courts of Barcelona, expressly waiving any other jurisdiction that may
+        apply to them.
+      </p>
+
+      <h2>7. Contact</h2>
+      <p>
+        For any queries related to this legal notice, you can contact us at{" "}
+        <a href={links.email}>{links.email.replace("mailto:", "")}</a>.
+      </p>
+    </article>
+  </main>
+</MainLayout>
+

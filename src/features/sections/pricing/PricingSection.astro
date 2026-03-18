@@ -62,7 +62,12 @@ const pricingPacks: Pricing[] = [
   id="pricing"
   class="flex flex-col gap-12 py-24 px-4 mx-auto max-w-7xl xl:px-10"
 >
-  <header class="flex flex-col gap-4 text-center">
+  <header
+    class="flex flex-col gap-4 text-center"
+    data-reveal="bottom"
+    data-speed="normal"
+    data-easing="soft"
+  >
     <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
       {t("prices")}
     </h2>
@@ -72,10 +77,13 @@ const pricingPacks: Pricing[] = [
   </header>
   <ul
     class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8 max-w-7xl mx-auto w-full"
+    data-stagger="120"
   >
     {
       pricingPacks.map((pricing, index) => (
         <li
+          data-reveal="bottom"
+          data-easing="soft"
           class:list={[
             "grid relative bg-background border border-border rounded-2xl overflow-hidden p-8 hover:shadow-xl transition-all duration-300",
             {

@@ -1,0 +1,171 @@
+---
+export const prerender = true;
+import MainLayout from "~/app/layouts/MainLayout.astro";
+import { getMetadata } from "~/lib/constants";
+
+const { name, links } = getMetadata("es");
+const lastUpdated = "18 de marzo de 2025";
+---
+
+<MainLayout
+  title={"Política de Privacidad"}
+  description="Información sobre cómo recopilamos, usamos y protegemos tus datos personales."
+>
+  <main class="w-full max-w-4xl mx-auto px-6 xl:px-10 py-20">
+    <div class="mb-10">
+      <a
+        href="/"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Volver al inicio
+      </a>
+    </div>
+
+    <article class="prose prose-neutral max-w-none">
+      <h1>Política de Privacidad</h1>
+      <p class="text-muted-foreground text-sm">
+        Última actualización: {lastUpdated}
+      </p>
+
+      <p>
+        En <strong>{name}</strong> nos tomamos muy en serio la privacidad de nuestros
+        usuarios. Esta política explica qué datos personales recopilamos, con qué
+        finalidad y cómo los protegemos, de acuerdo con el Reglamento General de Protección
+        de Datos (RGPD) y la Ley Orgánica 3/2018 de Protección de Datos Personales
+        y garantía de los derechos digitales (LOPDGDD).
+      </p>
+
+      <h2>1. Responsable del tratamiento</h2>
+      <ul>
+        <li><strong>Nombre:</strong> {name}</li>
+        <li>
+          <strong>Correo electrónico:</strong>
+          <a href={links.email}>{links.email.replace("mailto:", "")}</a>
+        </li>
+        <li>
+          <strong>Sitio web:</strong>
+          <a href={links.website} target="_blank" rel="noopener noreferrer"
+            >{links.website}</a
+          >
+        </li>
+        <li><strong>Ubicación:</strong> Barcelona, España</li>
+      </ul>
+
+      <h2>2. Datos que recopilamos</h2>
+      <p>Podemos recopilar los siguientes tipos de datos:</p>
+      <ul>
+        <li>
+          <strong>Datos de contacto:</strong> nombre, correo electrónico, número de
+          teléfono y mensaje, cuando nos los proporcionas voluntariamente a través
+          del formulario de contacto o WhatsApp.
+        </li>
+        <li>
+          <strong>Datos de navegación:</strong> dirección IP, tipo de navegador, páginas
+          visitadas y tiempo de permanencia, recopilados de forma anónima mediante
+          cookies técnicas y analíticas.
+        </li>
+      </ul>
+
+      <h2>3. Finalidad del tratamiento</h2>
+      <p>Utilizamos tus datos para:</p>
+      <ul>
+        <li>Responder a tus consultas y solicitudes de presupuesto.</li>
+        <li>
+          Gestionar la relación comercial derivada de la prestación de nuestros
+          servicios.
+        </li>
+        <li>
+          Enviarte información sobre nuestros servicios, si nos has dado tu
+          consentimiento expreso.
+        </li>
+        <li>Mejorar el rendimiento y la experiencia de uso del sitio web.</li>
+        <li>Cumplir con obligaciones legales aplicables.</li>
+      </ul>
+
+      <h2>4. Base jurídica del tratamiento</h2>
+      <ul>
+        <li>
+          <strong>Ejecución de un contrato</strong> o aplicación de medidas precontractuales.
+        </li>
+        <li>
+          <strong>Consentimiento</strong> del interesado (formulario de contacto,
+          suscripciones).
+        </li>
+        <li>
+          <strong>Interés legítimo</strong> en mejorar nuestros servicios y comunicaciones.
+        </li>
+        <li><strong>Cumplimiento de obligaciones legales.</strong></li>
+      </ul>
+
+      <h2>5. Conservación de los datos</h2>
+      <p>
+        Conservaremos tus datos durante el tiempo necesario para la finalidad
+        para la que fueron recogidos o mientras exista una relación contractual,
+        y en todo caso durante los plazos establecidos por la legislación
+        aplicable.
+      </p>
+
+      <h2>6. Destinatarios de los datos</h2>
+      <p>
+        No cedemos tus datos a terceros, salvo obligación legal o cuando sea
+        necesario para la prestación del servicio (p.ej., proveedores de
+        alojamiento web o herramientas de comunicación). Todos los proveedores
+        cuentan con garantías adecuadas de protección de datos.
+      </p>
+
+      <h2>7. Tus derechos</h2>
+      <p>
+        Puedes ejercer en cualquier momento los siguientes derechos dirigiéndote
+        a{" "}
+        <a href={links.email}>{links.email.replace("mailto:", "")}</a>:
+      </p>
+      <ul>
+        <li><strong>Acceso:</strong> conocer qué datos tratamos sobre ti.</li>
+        <li>
+          <strong>Rectificación:</strong> corregir datos inexactos o incompletos.
+        </li>
+        <li>
+          <strong>Supresión:</strong> solicitar la eliminación de tus datos.
+        </li>
+        <li>
+          <strong>Oposición:</strong> oponerte al tratamiento de tus datos.
+        </li>
+        <li>
+          <strong>Limitación:</strong> solicitar la restricción del tratamiento.
+        </li>
+        <li>
+          <strong>Portabilidad:</strong> recibir tus datos en un formato estructurado.
+        </li>
+      </ul>
+      <p>
+        También tienes derecho a presentar una reclamación ante la Agencia
+        Española de Protección de Datos (<a
+          href="https://www.aepd.es"
+          target="_blank"
+          rel="noopener noreferrer">www.aepd.es</a
+        >).
+      </p>
+
+      <h2>8. Seguridad</h2>
+      <p>
+        Adoptamos medidas técnicas y organizativas adecuadas para proteger tus
+        datos contra accesos no autorizados, pérdida, alteración o divulgación.
+      </p>
+
+      <h2>9. Cambios en esta política</h2>
+      <p>
+        Nos reservamos el derecho a actualizar esta política en cualquier
+        momento. La versión vigente estará siempre disponible en esta página con
+        la fecha de última actualización.
+      </p>
+
+      <h2>10. Contacto</h2>
+      <p>
+        Para cualquier consulta relacionada con esta política de privacidad,
+        puedes contactarnos en <a href={links.email}
+          >{links.email.replace("mailto:", "")}</a
+        >.
+      </p>
+    </article>
+  </main>
+</MainLayout>

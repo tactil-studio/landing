@@ -1,0 +1,18 @@
+---
+export const prerender = true;
+import MainLayout from "~/app/layouts/MainLayout.astro";
+import ContactSection from "~/features/sections/contact/ContactSection.astro";
+import { useT } from "~/shared/i18n/fn";
+
+const t = useT("it");
+---
+
+<MainLayout
+  title={t("contact_page_title")}
+  description={t("contact_page_description")}
+>
+  <div class="pt-24">
+    <ContactSection />
+  </div>
+</MainLayout>
+

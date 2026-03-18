@@ -3,7 +3,7 @@
  * Textarea Component - Primitive UI component for text areas
  */
 
-import { inputBaseStyles, labelStyles } from "./styles";
+import { inputBaseStyles, labelStyles } from "./react/styles";
 
 type Props = {
 	label?: string;
@@ -54,4 +54,3 @@ const labelClasses = [labelStyles, labelClass].filter(Boolean).join(" ");
 		class={textareaClasses}
 		{...rest}></textarea>
 </div>
-

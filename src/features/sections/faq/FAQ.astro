@@ -50,7 +50,10 @@ const rightColumn = faqItems.slice(4);
 >
   <div class="mx-auto max-w-7xl">
     <div
-      class="mx-auto max-w-2xl text-center intersect-once intersect:motion-preset-blur-down motion-delay-200 first_hidden"
+      class="mx-auto max-w-2xl text-center"
+      data-reveal="bottom"
+      data-speed="normal"
+      data-easing="soft"
     >
       <h2
         class="text-balance text-4xl font-bold tracking-tight text-foreground sm:text-5xl"
@@ -65,12 +68,12 @@ const rightColumn = faqItems.slice(4);
     <div class="mx-auto mt-20 max-w-6xl">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Left Column -->
-        <div>
+        <div data-reveal="left" data-easing="soft">
           <FAQAccordion items={leftColumn} startIndex={0} client:load />
         </div>
 
         <!-- Right Column -->
-        <div>
+        <div data-reveal="right" data-easing="soft" data-delay="100">
           <FAQAccordion items={rightColumn} startIndex={4} client:load />
         </div>
       </div>

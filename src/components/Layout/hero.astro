@@ -11,7 +11,13 @@ const l = Astro.currentLocale;
 >
   <Titles />
 
-  <div class="flex flex-col gap-6 delayed-appearing mb-8">
+  <div
+    class="flex flex-col gap-6 mb-8"
+    data-reveal="bottom"
+    data-speed="normal"
+    data-easing="soft"
+    data-delay="300"
+  >
     <p
       class="max-w-md balanced text-muted-foreground text-lg leading-relaxed"
       set:html={t(l, "summary")}
@@ -19,7 +25,11 @@ const l = Astro.currentLocale;
   </div>
 
   <div
-    class="flex gap-6 items-center delayed-appearing max-md:text-sm flex-wrap"
+    class="flex gap-6 items-center max-md:text-sm flex-wrap"
+    data-reveal="bottom"
+    data-speed="normal"
+    data-easing="elastic"
+    data-delay="500"
   >
     <Link href="#contact" variant="primary" size="lg">
       {t(l, T.getInTouch)}

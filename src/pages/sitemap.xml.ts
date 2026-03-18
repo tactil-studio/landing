@@ -1,7 +1,16 @@
 import type { APIRoute } from "astro";
 import { baseUrl, siteUpdatedAt } from "~/lib/constants";
 
-const routes = ["/", "/projects", "/es", "/es/projects", "/ca", "/ca/projects"];
+const routes = [
+	"/",
+	"/projects",
+	"/es",
+	"/es/projects",
+	"/ca",
+	"/ca/projects",
+	"/it",
+	"/it/projects",
+];
 
 const buildSitemap = () => {
 	const urls = routes

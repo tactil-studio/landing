@@ -139,4 +139,20 @@ export const en = {
 	contact_success: "Message sent! We'll get back to you soon.",
 	contact_error: "Error sending. Please try again.",
 	see_examples: "See examples",
+
+	// 404
+	not_found_title: "Page not found",
+	not_found_description:
+		"Looks like this page doesn't exist or has been moved. Here are some useful links.",
+	not_found_back: "Back to home",
+	not_found_contact_prompt: "Think this is a mistake?",
+	not_found_contact_link: "Contact us",
+	nav_home: "Home",
+	nav_projects: "Projects",
+	nav_contact: "Contact",
+
+	// Contact page
+	contact_page_title: "Contact",
+	contact_page_description:
+		"Get in touch with us and we'll reply within 24 hours.",
 } as const;

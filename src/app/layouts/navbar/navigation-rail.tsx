@@ -7,7 +7,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
-} from "~/shared/ui/navigation-menu"
+} from "~/shared/ui/react/navigation-menu"
 
 const components: { title: string; href: string; description: string }[] = [
   {

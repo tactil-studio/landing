@@ -1,0 +1,158 @@
+---
+export const prerender = true;
+import MainLayout from "~/app/layouts/MainLayout.astro";
+import { getMetadata } from "~/lib/constants";
+
+const { name, links } = getMetadata("ca");
+const lastUpdated = "18 de març de 2025";
+---
+
+<MainLayout
+  title={"Política de Cookies"}
+  description="Informació sobre les cookies que utilitzem al nostre lloc web i com pots gestionar-les."
+>
+  <main class="w-full max-w-4xl mx-auto px-6 xl:px-10 py-20">
+    <div class="mb-10">
+      <a
+        href="/ca"
+        class="text-sm text-muted-foreground hover:text-foreground transition-colors"
+      >
+        ← Tornar a l'inici
+      </a>
+    </div>
+
+    <article class="prose prose-neutral max-w-none">
+      <h1>Política de Cookies</h1>
+      <p class="text-muted-foreground text-sm">
+        Última actualització: {lastUpdated}
+      </p>
+
+      <p>
+        Aquest lloc web, operat per <strong>{name}</strong>, utilitza cookies i
+        tecnologies similars per millorar l'experiència de navegació, analitzar
+        el trànsit i oferir funcionalitats bàsiques. A continuació t'expliquem
+        què són les cookies, quins tipus utilitzem i com pots gestionar-les.
+      </p>
+
+      <h2>1. Què són les cookies?</h2>
+      <p>
+        Les cookies són petits fitxers de text que els llocs web emmagatzemen
+        al teu dispositiu quan els visites. Permeten recordar informació sobre
+        la teva visita, com les teves preferències d'idioma o tema (clar/fosc),
+        cosa que facilita la navegació i fa el lloc més útil en visites
+        posteriors.
+      </p>
+
+      <h2>2. Tipus de cookies que utilitzem</h2>
+
+      <h3>2.1 Cookies tècniques (estrictament necessàries)</h3>
+      <p>
+        Són imprescindibles per al correcte funcionament del lloc web. Sense
+        elles, alguns serveis o funcionalitats no estarien disponibles.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Finalitat</th>
+            <th>Durada</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>theme</code></td>
+            <td>Emmagatzema la preferència de tema (clar/fosc) de l'usuari.</td>
+            <td>Persistent (localStorage)</td>
+          </tr>
+          <tr>
+            <td><code>locale</code></td>
+            <td>Emmagatzema la preferència d'idioma de l'usuari.</td>
+            <td>1 any</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>2.2 Cookies analítiques</h3>
+      <p>
+        Ens permeten comptar les visites i analitzar el trànsit per millorar el
+        rendiment i els continguts del lloc. Tota la informació recollida és
+        anònima.
+      </p>
+      <p>
+        Actualment aquest lloc pot fer ús d'eines d'anàlisi web de tercers. En
+        cas d'incorporar-les, informarem degudament en aquesta política i
+        sol·licitarem el teu consentiment quan sigui necessari.
+      </p>
+
+      <h2>3. Cookies de tercers</h2>
+      <p>
+        Alguns continguts o funcionalitats del lloc poden ser proporcionats per
+        tercers (per exemple, vídeos incrustats o mapes). Aquests tercers poden
+        instal·lar les seves pròpies cookies. No tenim control sobre aquestes
+        cookies i et recomanem consultar les seves pròpies polítiques de
+        privacitat.
+      </p>
+
+      <h2>4. Com gestionar les cookies?</h2>
+      <p>
+        Pots configurar el teu navegador per acceptar, rebutjar o eliminar
+        cookies en qualsevol moment. Tingues en compte que desactivar certes
+        cookies pot afectar el funcionament del lloc.
+      </p>
+      <p>Instruccions per als navegadors més comuns:</p>
+      <ul>
+        <li>
+          <a
+            href="https://support.google.com/chrome/answer/95647"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Google Chrome
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.mozilla.org/ca/kb/activa-i-desactiva-les-galetes-que-els-webs-utilitzen"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Mozilla Firefox
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.apple.com/ca-es/guide/safari/sfri11471/mac"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Safari
+          </a>
+        </li>
+        <li>
+          <a
+            href="https://support.microsoft.com/ca-es/windows/eliminar-i-administrar-cookies-168dab11-0753-043d-7c16-ede5947fc64d"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Microsoft Edge
+          </a>
+        </li>
+      </ul>
+
+      <h2>5. Actualització d'aquesta política</h2>
+      <p>
+        Podem actualitzar aquesta política de cookies quan sigui necessari. La
+        versió vigent estarà sempre disponible en aquesta pàgina amb la data
+        de l'última actualització. Et recomanem revisar-la periòdicament.
+      </p>
+
+      <h2>6. Contacte</h2>
+      <p>
+        Si tens algún dubte sobre la nostra política de cookies, pots
+        contactar-nos a{" "}
+        <a href={links.email}>{links.email.replace("mailto:", "")}</a>.
+      </p>
+    </article>
+  </main>
+</MainLayout>
+

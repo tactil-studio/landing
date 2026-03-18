@@ -1,4 +1,5 @@
 ---
+import "@polgubau/astro-reveal/styles";
 import BaseHead from "~/components/BaseHead.astro";
 import ThemeScript from "~/shared/ui/theme/theme-script.astro";
 import Footer from "./footer/footer.astro";
@@ -24,16 +25,19 @@ const { title, description, image } = Astro.props;
   </head>
   <body class="antialiased">
     <Navbar />
-    <main class="flex min-h-screen w-full flex-col gap-20 max-md:gap-10 bg-primary">
+    <main
+      class="flex min-h-screen w-full flex-col gap-20 max-md:gap-10 bg-primary"
+    >
       <div class="bg-background rounded-b-[5vw] flex flex-col gap-20">
-        <div
-          class="items-center flex-col pb-[5vw] w-full"
-        >
+        <div class="items-center flex-col pb-[5vw] w-full">
           <slot />
         </div>
       </div>
       <Footer />
     </main>
+    <script>
+      import "@polgubau/astro-reveal";
+    </script>
   </body>
 </html>
 
