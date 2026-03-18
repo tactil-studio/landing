@@ -1,246 +1,170 @@
+import { actions } from "astro:actions";
 import { useEffect, useState } from "react";
-import { Button } from "~/shared/ui/button";
-import { Input } from "~/shared/ui/input";
-import { Select } from "~/shared/ui/select";
-import { Textarea } from "~/shared/ui/textarea";
 
-type ContactFormProps = {
-	translations: {
-		name_label: string;
-		name_placeholder: string;
-		email_label: string;
-		email_placeholder: string;
-		phone_label: string;
-		phone_placeholder: string;
-		service_label: string;
-		service_placeholder: string;
-		service_web: string;
-		service_landing: string;
-		service_ecommerce: string;
-		service_app: string;
-		service_other: string;
-		message_label: string;
-		message_placeholder: string;
-		submit: string;
-		sending: string;
-		success: string;
-		error: string;
-	};
-};
+export default function ContactForm() {
+	const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+	const [errorMessage, setErrorMessage] = useState("");
 
-// Mapeo de IDs de servicio a valores de traducción
-const serviceMap: Record<string, string> = {
-	corporate: "service_web",
-	landing: "service_landing",
-	custom: "service_other",
-};
-
-export default function ContactForm({ translations }: ContactFormProps) {
-	// Leer el parámetro de servicio de la URL
-	const getServiceFromURL = () => {
-		if (typeof window === "undefined") return "";
-		const params = new URLSearchParams(window.location.search);
-		const serviceId = params.get("service");
-		if (serviceId && serviceMap[serviceId]) {
-			// Retornar el valor traducido correspondiente
-			return translations[serviceMap[serviceId] as keyof typeof translations] as string;
-		}
-		return "";
-	};
-
-	const [formData, setFormData] = useState({
-		name: "",
-		email: "",
-		phone: "",
-		service: getServiceFromURL(),
-		message: "",
+	// Capturar UTM parameters de la URL
+	const [utmParams, setUtmParams] = useState({
+		utm_source: "",
+		utm_medium: "",
+		utm_campaign: "",
 	});
 
-	const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">(
-		"idle",
-	);
-
-	// Escuchar cambios en la URL
 	useEffect(() => {
-		const handleURLChange = () => {
-			if (typeof window === "undefined") return;
-			const params = new URLSearchParams(window.location.search);
-			const serviceId = params.get("service");
-
-			console.log("ContactForm - URL changed");
-			console.log("Service ID from URL:", serviceId);
-			console.log("Service map:", serviceMap);
-
-			if (serviceId && serviceMap[serviceId]) {
-				const translationKey = serviceMap[serviceId];
-				const translatedService = translations[translationKey as keyof typeof translations] as string;
-
-				console.log("Translation key:", translationKey);
-				console.log("Translated service:", translatedService);
-
-				setFormData((prev) => ({
-					...prev,
-					service: translatedService,
-				}));
-			} else {
-				console.log("No valid service ID found or not in map");
-			}
-		};
-
-		// Escuchar cambios en el hash/search params
-		window.addEventListener("popstate", handleURLChange);
-		window.addEventListener("hashchange", handleURLChange);
-
-		// Ejecutar al montar para capturar el valor inicial
-		console.log("ContactForm mounted, checking URL...");
-		handleURLChange();
-
-		return () => {
-			window.removeEventListener("popstate", handleURLChange);
-			window.removeEventListener("hashchange", handleURLChange);
-		};
-		// eslint-disable-next-line react-hooks/exhaustive-deps
+		// Capturar UTM params al cargar
+		const params = new URLSearchParams(window.location.search);
+		setUtmParams({
+			utm_source: params.get("utm_source") || "",
+			utm_medium: params.get("utm_medium") || "",
+			utm_campaign: params.get("utm_campaign") || "",
+		});
 	}, []);
 
-	const handleSubmit = async (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		setStatus("sending");
+		setStatus("loading");
+		setErrorMessage("");
+
+		// Guardar referencia al form antes del async
+		const form = e.currentTarget;
+		const formData = new FormData(form);
+
+		// Agregar datos adicionales
+		formData.append("timezone", Intl.DateTimeFormat().resolvedOptions().timeZone);
+		formData.append("utm_source", utmParams.utm_source);
+		formData.append("utm_medium", utmParams.utm_medium);
+		formData.append("utm_campaign", utmParams.utm_campaign);
 
 		try {
-			const response = await fetch("/api/contact", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(formData),
-			});
+			// Usar Astro Actions
+			const { data, error } = await actions.sendContact(formData);
 
-			if (response.ok) {
-				setStatus("success");
-				setFormData({
-					name: "",
-					email: "",
-					phone: "",
-					service: "",
-					message: "",
-				});
-				setTimeout(() => setStatus("idle"), 5000);
-			} else {
-				console.error("API error:", await response.text());
+			if (error) {
 				setStatus("error");
+				setErrorMessage(error.message || "Error al enviar el mensaje");
+				console.error("Action error:", error);
+				return;
+			}
+
+			if (data?.success) {
+				setStatus("success");
+				form.reset(); // Usar la referencia guardada
 				setTimeout(() => setStatus("idle"), 5000);
 			}
 		} catch (error) {
-			console.error("Error:", error);
 			setStatus("error");
-			setTimeout(() => setStatus("idle"), 5000);
+			setErrorMessage("Error de conexión. Inténtalo de nuevo.");
+			console.error("Error completo:", error);
 		}
 	};
 
-	const handleChange = (
-		e: React.ChangeEvent<
-			HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-		>,
-	) => {
-		setFormData({
-			...formData,
-			[e.target.name]: e.target.value,
-		});
-	};
-
 	return (
-		<form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
-			{/* Name */}
-			<Input
-				label={translations.name_label}
-				id="name"
-				name="name"
-				type="text"
-				value={formData.name}
-				onChange={handleChange}
-				placeholder={translations.name_placeholder}
-				required
-			/>
+		<form className="space-y-4" onSubmit={handleSubmit}>
+			<div>
+				<label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+					Nombre
+				</label>
+				<input
+					type="text"
+					id="name"
+					name="name"
+					required
+					disabled={status === "loading"}
+					className="w-full px-4 py-3 rounded-xl bg-background border border-muted-foreground text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+					placeholder="Tu nombre"
+				/>
+			</div>
 
-			{/* Email */}
-			<Input
-				label={translations.email_label}
-				id="email"
-				name="email"
-				type="email"
-				value={formData.email}
-				onChange={handleChange}
-				placeholder={translations.email_placeholder}
-				required
-			/>
+			<div>
+				<label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+					Email
+				</label>
+				<input
+					type="email"
+					id="email"
+					name="email"
+					required
+					disabled={status === "loading"}
+					className="w-full px-4 py-3 rounded-xl bg-background border border-muted-foreground text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+					placeholder="tu@email.com"
+				/>
+			</div>
 
-			{/* Phone */}
-			<Input
-				label={translations.phone_label}
-				id="phone"
-				name="phone"
-				type="tel"
-				value={formData.phone}
-				onChange={handleChange}
-				placeholder={translations.phone_placeholder}
-			/>
+			<div className="grid md:grid-cols-2 gap-4">
+				<div>
+					<label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
+						Empresa (opcional)
+					</label>
+					<input
+						type="text"
+						id="company"
+						name="company"
+						disabled={status === "loading"}
+						className="w-full px-4 py-3 rounded-xl bg-background border border-muted-foreground text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+						placeholder="Tu empresa"
+					/>
+				</div>
+				<div>
+					<label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
+						Teléfono
+					</label>
+					<input
+						type="tel"
+						id="phone"
+						name="phone"
+						required
+						disabled={status === "loading"}
+						className="w-full px-4 py-3 rounded-xl bg-background border border-muted-foreground text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary disabled:opacity-50"
+						placeholder="666 123 456"
+					/>
+				</div>
+			</div>
 
-			{/* Service */}
-			<Select
-				label={translations.service_label}
-				id="service"
-				name="service"
-				value={formData.service}
-				onChange={handleChange}
-			>
-				<option value="">{translations.service_placeholder}</option>
-				<option value={translations.service_web}>
-					{translations.service_web}
-				</option>
-				<option value={translations.service_landing}>
-					{translations.service_landing}
-				</option>
-				<option value={translations.service_ecommerce}>
-					{translations.service_ecommerce}
-				</option>
-				<option value={translations.service_app}>
-					{translations.service_app}
-				</option>
-				<option value={translations.service_other}>
-					{translations.service_other}
-				</option>
-			</Select>
+			<div>
+				<label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+					Mensaje
+				</label>
+				<textarea
+					id="message"
+					minLength={1}
+					name="message"
+					required
+					rows={4}
+					disabled={status === "loading"}
+					className="w-full px-4 py-3 rounded-xl bg-background border border-muted-foreground text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary resize-none disabled:opacity-50"
+					placeholder="¿Cómo podemos ayudarte?"
+				/>
+			</div>
 
-			{/* Message */}
-			<Textarea
-				label={translations.message_label}
-				id="message"
-				name="message"
-				value={formData.message}
-				onChange={handleChange}
-				placeholder={translations.message_placeholder}
-				required
-				rows={6}
-			/>
+			{/* Mensaje de éxito */}
+			{status === "success" && (
+				<div className="p-4 rounded-xl bg-green-50 border border-green-200">
+					<p className="text-green-800 text-sm font-medium">
+						✓ Mensaje enviado correctamente. Te contactaremos pronto.
+					</p>
+				</div>
+			)}
 
-			{/* Submit Button */}
-			<Button
+			{/* Mensaje de error */}
+			{status === "error" && (
+				<div className="p-4 rounded-xl bg-red-50 border border-red-200">
+					<p className="text-red-800 text-sm font-medium">
+						✗ {errorMessage}
+					</p>
+				</div>
+			)}
+
+			<button
 				type="submit"
-				disabled={status === "sending"}
-				variant="primary"
-				size="md"
-				className="w-full"
+				disabled={status === "loading"}
+				className="w-full px-6 py-3 bg-primary text-background rounded-full font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 overflow-hidden relative"
 			>
-				{status === "sending" ? (
-					<span className="flex items-center justify-center gap-2">
-						<svg
-							className="animate-spin h-5 w-5"
-							xmlns="http://www.w3.org/2000/svg"
-							fill="none"
-							viewBox="0 0 24 24"
-							aria-label="Loading"
-						>
-							<title>Loading</title>
+				{status === "loading" ? (
+					<>
+						<svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+							<title>Enviando...</title>
 							<circle
 								className="opacity-25"
 								cx="12"
@@ -255,25 +179,23 @@ export default function ContactForm({ translations }: ContactFormProps) {
 								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 							/>
 						</svg>
-						{translations.sending}
-					</span>
+						Enviando...
+					</>
 				) : (
-					translations.submit
+					<>
+						Enviar mensaje
+						<svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<title>Enviar mensaje</title>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M17 8l4 4m0 0l-4 4m4-4H3"
+							/>
+						</svg>
+					</>
 				)}
-			</Button>
-
-			{/* Status Messages */}
-			{status === "success" && (
-				<div className="p-4 bg-muted rounded-xl text-green-800 dark:text-green-400 text-center">
-					✓ {translations.success}
-				</div>
-			)}
-
-			{status === "error" && (
-				<div className="p-4 bg-muted rounded-xl text-red-800 dark:text-red-400 text-center">
-					✕ {translations.error}
-				</div>
-			)}
+			</button>
 		</form>
 	);
 }
