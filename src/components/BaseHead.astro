@@ -14,7 +14,10 @@ interface Props {
 const locale = Astro.currentLocale ?? "en";
 const metadata = getMetadata(locale);
 const canonicalURL = new URL(Astro.url.pathname, baseUrl);
-const pathWithoutLocale = Astro.url.pathname.replace(/^\/(es|ca)(\/|$)/, "/");
+const pathWithoutLocale = Astro.url.pathname.replace(
+	/^\/(es|ca|it)(\/|$)/,
+	"/",
+);
 const alternateUrls = {
 	en: new URL(pathWithoutLocale, baseUrl),
 	es: new URL(
@@ -23,6 +26,10 @@ const alternateUrls = {
 	),
 	ca: new URL(
 		pathWithoutLocale === "/" ? "/ca" : `/ca${pathWithoutLocale}`,
+		baseUrl,
+	),
+	it: new URL(
+		pathWithoutLocale === "/" ? "/it" : `/it${pathWithoutLocale}`,
 		baseUrl,
 	),
 };
@@ -38,14 +45,26 @@ const imageURL = new URL(image, baseUrl);
 const structuredData = [
 	{
 		"@context": "https://schema.org",
-		"@type": "Organization",
+		"@type": ["Organization", "ProfessionalService"],
 		"@id": `${baseUrl}#organization`,
 		name: metadata.name,
 		alternateName: metadata.longName,
 		url: baseUrl,
-		logo: new URL(metadata.picture, baseUrl).toString(),
+		logo: {
+			"@type": "ImageObject",
+			url: new URL(metadata.picture, baseUrl).toString(),
+		},
+		image: new URL(image, baseUrl).toString(),
 		email: metadata.contact.email,
 		slogan: metadata.slogan,
+		description: metadata.description,
+		address: {
+			"@type": "PostalAddress",
+			addressLocality: "Barcelona",
+			addressCountry: "ES",
+		},
+		areaServed: ["ES", "IT", "EU"],
+		serviceType: ["Web Design", "Web Development", "Digital Consultancy"],
 		sameAs: [metadata.links.linkedin, metadata.links.github].filter(Boolean),
 	},
 	{
@@ -74,7 +93,12 @@ const structuredData = [
 		about: {
 			"@id": `${baseUrl}#organization`,
 		},
-		primaryImageOfPage: imageURL.toString(),
+		primaryImageOfPage: {
+			"@type": "ImageObject",
+			url: imageURL.toString(),
+			width: 1200,
+			height: 630,
+		},
 	},
 ];
 ---
@@ -98,12 +122,16 @@ const structuredData = [
 <link rel="alternate" hreflang="en" href={alternateUrls.en} />
 <link rel="alternate" hreflang="es" href={alternateUrls.es} />
 <link rel="alternate" hreflang="ca" href={alternateUrls.ca} />
+<link rel="alternate" hreflang="it" href={alternateUrls.it} />
 <link rel="alternate" hreflang="x-default" href={alternateUrls.en} />
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
 <meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="keywords" content={metadata.tags.join(", ")} />
+<meta name="author" content={metadata.name} />
+<meta name="theme-color" content="#2A4227" />
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />
@@ -115,6 +143,8 @@ const structuredData = [
 <meta property="og:description" content={description} />
 <meta property="og:image" content={imageURL} />
 <meta property="og:image:alt" content={title} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
 <meta property="og:locale" content={locale} />
 <meta property="og:updated_time" content={siteUpdatedAt} />
 
@@ -124,5 +154,9 @@ const structuredData = [
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={imageURL} />
-<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+<script
+	is:inline
+	type="application/ld+json"
+	set:html={JSON.stringify(structuredData)}
+/>
 <ClientRouter />

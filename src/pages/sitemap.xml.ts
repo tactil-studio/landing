@@ -1,28 +1,49 @@
 import type { APIRoute } from "astro";
 import { baseUrl, siteUpdatedAt } from "~/lib/constants";
 
-const routes = [
-	"/",
-	"/projects",
-	"/es",
-	"/es/projects",
-	"/ca",
-	"/ca/projects",
-	"/it",
-	"/it/projects",
+type RouteEntry = { path: string; priority?: number; changefreq?: string };
+
+const routes: RouteEntry[] = [
+	// Main pages
+	{ path: "/", priority: 1.0, changefreq: "weekly" },
+	{ path: "/projects", priority: 0.9 },
+	{ path: "/contact", priority: 0.9 },
+	{ path: "/legal", priority: 0.3, changefreq: "monthly" },
+	{ path: "/privacy", priority: 0.3, changefreq: "monthly" },
+	{ path: "/cookies", priority: 0.3, changefreq: "monthly" },
+	// Spanish
+	{ path: "/es", priority: 1.0, changefreq: "weekly" },
+	{ path: "/es/projects", priority: 0.9 },
+	{ path: "/es/contact", priority: 0.9 },
+	{ path: "/es/legal", priority: 0.3, changefreq: "monthly" },
+	{ path: "/es/privacy", priority: 0.3, changefreq: "monthly" },
+	{ path: "/es/cookies", priority: 0.3, changefreq: "monthly" },
+	// Catalan
+	{ path: "/ca", priority: 1.0, changefreq: "weekly" },
+	{ path: "/ca/projects", priority: 0.9 },
+	{ path: "/ca/contact", priority: 0.9 },
+	{ path: "/ca/legal", priority: 0.3, changefreq: "monthly" },
+	{ path: "/ca/privacy", priority: 0.3, changefreq: "monthly" },
+	{ path: "/ca/cookies", priority: 0.3, changefreq: "monthly" },
+	// Italian
+	{ path: "/it", priority: 1.0, changefreq: "weekly" },
+	{ path: "/it/projects", priority: 0.9 },
+	{ path: "/it/contact", priority: 0.9 },
+	{ path: "/it/legal", priority: 0.3, changefreq: "monthly" },
+	{ path: "/it/privacy", priority: 0.3, changefreq: "monthly" },
+	{ path: "/it/cookies", priority: 0.3, changefreq: "monthly" },
 ];
 
 const buildSitemap = () => {
 	const urls = routes
-		.map((route) => {
-			const url = new URL(route, baseUrl).toString();
-
+		.map(({ path, priority = 0.8, changefreq = "weekly" }) => {
+			const url = new URL(path, baseUrl).toString();
 			return `
   <url>
     <loc>${url}</loc>
     <lastmod>${siteUpdatedAt}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>${route === "/" ? "1.0" : "0.8"}</priority>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority.toFixed(1)}</priority>
   </url>`;
 		})
 		.join("");
