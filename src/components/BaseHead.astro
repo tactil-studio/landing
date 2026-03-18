@@ -2,6 +2,7 @@
 // Import the global.css file here so that it is included on
 // all pages through the use of the <BaseHead /> component.
 import { ClientRouter } from "astro:transitions";
+import stackSansUrl from "../assets/fonts/stackSans.ttf?url";
 import { baseUrl, getMetadata, siteUpdatedAt } from "../lib/constants";
 import "../styles/global.css";
 
@@ -9,6 +10,7 @@ interface Props {
 	title?: string;
 	description?: string;
 	image?: string;
+	noindex?: boolean;
 }
 
 const locale = Astro.currentLocale ?? "en";
@@ -37,10 +39,41 @@ const alternateUrls = {
 const {
 	title = metadata.title,
 	description = metadata.description,
-	image = "/thumbnail.png",
+	image,
+	noindex = false,
 } = Astro.props;
 
-const imageURL = new URL(image, baseUrl);
+// Dynamic OG image — falls back to static thumbnail if an explicit image is passed
+const ogImageUrl = image
+	? new URL(image, baseUrl)
+	: (() => {
+			const u = new URL("/og.png", baseUrl);
+			u.searchParams.set("title", title);
+			u.searchParams.set("description", description);
+			return u;
+		})();
+
+// Auto-generate BreadcrumbList from URL path
+const pathSegments = pathWithoutLocale.split("/").filter(Boolean);
+const breadcrumbSchema =
+	pathSegments.length > 0
+		? {
+				"@context": "https://schema.org",
+				"@type": "BreadcrumbList",
+				itemListElement: [
+					{ "@type": "ListItem", position: 1, name: "Home", item: baseUrl },
+					...pathSegments.map((seg, i) => ({
+						"@type": "ListItem",
+						position: i + 2,
+						name: seg.charAt(0).toUpperCase() + seg.slice(1),
+						item: new URL(
+							pathSegments.slice(0, i + 1).join("/"),
+							baseUrl,
+						).toString(),
+					})),
+				],
+			}
+		: null;
 
 const structuredData = [
 	{
@@ -54,7 +87,7 @@ const structuredData = [
 			"@type": "ImageObject",
 			url: new URL(metadata.picture, baseUrl).toString(),
 		},
-		image: new URL(image, baseUrl).toString(),
+		image: ogImageUrl.toString(),
 		email: metadata.contact.email,
 		slogan: metadata.slogan,
 		description: metadata.description,
@@ -95,18 +128,34 @@ const structuredData = [
 		},
 		primaryImageOfPage: {
 			"@type": "ImageObject",
-			url: imageURL.toString(),
+			url: ogImageUrl.toString(),
 			width: 1200,
 			height: 630,
 		},
 	},
+	...(breadcrumbSchema ? [breadcrumbSchema] : []),
 ];
 ---
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+<meta name="generator" content={Astro.generator} />
+<meta name="robots" content={noindex ? "noindex,nofollow" : "index,follow"} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<meta name="apple-mobile-web-app-title" content="Tactil" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Font preload — prevents FOUT and improves LCP -->
+<link rel="preload" href={stackSansUrl} as="font" type="font/ttf" crossorigin />
+
+<!-- Sitemap & RSS -->
 <link rel="sitemap" href={new URL("sitemap.xml", baseUrl)} />
 <link
 	rel="alternate"
@@ -114,8 +163,6 @@ const structuredData = [
 	title={title}
 	href={new URL("rss.xml", baseUrl)}
 />
-<meta name="generator" content={Astro.generator} />
-<meta name="robots" content="index,follow" />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -127,36 +174,45 @@ const structuredData = [
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
-<meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="keywords" content={metadata.tags.join(", ")} />
 <meta name="author" content={metadata.name} />
 <meta name="theme-color" content="#2A4227" />
 
-<!-- Open Graph / Facebook -->
+<!-- Open Graph -->
 <meta property="og:type" content="website" />
-<meta property="og:url" content={canonicalURL} />
-
+<meta property="og:url" content={canonicalURL.toString()} />
 <meta property="og:site_name" content={metadata.longName} />
-
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={imageURL} />
+<meta property="og:image" content={ogImageUrl.toString()} />
 <meta property="og:image:alt" content={title} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:locale" content={locale} />
+{locale !== "en" && <meta property="og:locale:alternate" content="en" />}
+{locale !== "es" && <meta property="og:locale:alternate" content="es" />}
+{locale !== "ca" && <meta property="og:locale:alternate" content="ca" />}
+{locale !== "it" && <meta property="og:locale:alternate" content="it" />}
 <meta property="og:updated_time" content={siteUpdatedAt} />
 
-<!-- Twitter -->
+<!-- Twitter Card -->
 <meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={canonicalURL} />
+<meta property="twitter:site" content="@tactil_studio" />
+<meta property="twitter:creator" content="@tactil_studio" />
+<meta property="twitter:url" content={canonicalURL.toString()} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={imageURL} />
+<meta property="twitter:image" content={ogImageUrl.toString()} />
 <script
 	is:inline
 	type="application/ld+json"
 	set:html={JSON.stringify(structuredData)}
 />
 <ClientRouter />
+
+<!-- Re-init astro-reveal after View Transitions navigate -->
+<script>
+	import { init } from "@polgubau/astro-reveal/reveal";
+	document.addEventListener("astro:page-load", () => init());
+</script>
