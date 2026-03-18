@@ -75,28 +75,7 @@ export const server = {
 				timeZone: "Europe/Madrid",
 			});
 			const isoTimestamp = now.toISOString();
-
-			// Preparar datos para Google Sheets
-			const sheetData = {
-				timestamp,
-				name,
-				email,
-				phone,
-				company: company || "",
-				message,
-				ip,
-				userAgent,
-				browser,
-				os,
-				device,
-				language,
-				timezone: timezone || "Unknown",
-				referrer,
-				utmSource: utm_source || "",
-				utmMedium: utm_medium || "",
-				utmCampaign: utm_campaign || "",
-			};
-
+ 
 			try {
 				// 1. Enviar email con Resend
 				const { data: emailData, error: emailError } = await resend.emails.send(
