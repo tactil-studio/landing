@@ -2,42 +2,28 @@
 import LanguageSelector from "~/shared/language-selector.astro";
 import ThemeToggle from "~/shared/ui/theme/theme-toggle";
 const lang = Astro.currentLocale;
-const locale = lang === "es" || lang === "ca" ? lang : "en";
+const locale = (["es", "ca", "it"].includes(lang ?? "") ? lang : "en") as
+  | "en"
+  | "es"
+  | "ca"
+  | "it";
 
 const labels = {
-  en: {
-    work: "Work",
-    pricing: "Pricing",
-    faq: "FAQ",
-    projects: "Projects",
-  },
-  es: {
-    work: "Trabajos",
-    pricing: "Precios",
-    faq: "FAQ",
-    projects: "Proyectos",
-  },
-  ca: {
-    work: "Treballs",
-    pricing: "Preus",
-    faq: "FAQ",
-    projects: "Projectes",
-  },
+  en: { work: "Work", pricing: "Pricing", faq: "FAQ" },
+  es: { work: "Trabajos", pricing: "Precios", faq: "FAQ" },
+  ca: { work: "Treballs", pricing: "Preus", faq: "FAQ" },
+  it: { work: "Lavori", pricing: "Prezzi", faq: "FAQ" },
 } as const;
 
 const withLocale = (path: string) => {
-  if (locale === "en") {
-    return path;
-  }
-
+  if (locale === "en") return path;
   return path === "/" ? `/${locale}` : `/${locale}${path}`;
 };
 
 const navigationItems = [
-  { href: withLocale("/#portafolio"), label: labels[locale].work },
+  { href: withLocale("/#work"), label: labels[locale].work },
   { href: withLocale("/#pricing"), label: labels[locale].pricing },
   { href: withLocale("/#faq"), label: labels[locale].faq },
-  { href: withLocale("/projects"), label: labels[locale].projects },
 ];
 ---
 

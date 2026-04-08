@@ -1,9 +1,31 @@
 ---
+export const prerender = true;
 import MainLayout from "~/app/layouts/MainLayout.astro";
 import ProjectsList from "~/components/Projects/ProjectList/ProjectsList.astro";
+import { useT } from "~/shared/i18n/fn";
+
+const t = useT("ca");
 ---
 
-<MainLayout>
-  <ProjectsList />
+<MainLayout
+  title={t("projects_page_title")}
+  description={t("projects_page_description")}
+>
+  <div class="pt-28 pb-20">
+    <header
+      class="max-w-7xl mx-auto px-6 xl:px-10 mb-16"
+      data-reveal="bottom"
+      data-easing="soft"
+    >
+      <h1
+        class="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4"
+      >
+        {t("projects_page_title")}
+      </h1>
+      <p class="text-lg text-muted-foreground max-w-2xl">
+        {t("projects_page_description")}
+      </p>
+    </header>
+    <ProjectsList />
+  </div>
 </MainLayout>
-

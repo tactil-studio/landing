@@ -38,25 +38,31 @@ const getLocalizedUrl = (localeCode: string) => {
   }
 </NativeSelect>
 <script>
-  const languageSelector = document.getElementById(
-    "language-selector",
-  ) as HTMLSelectElement;
+  function initLanguageSelector() {
+    const el = document.getElementById(
+      "language-selector",
+    ) as HTMLSelectElement | null;
+    if (!el) return;
 
-  if (languageSelector) {
-    languageSelector.addEventListener("change", (e) => {
+    // Clone to strip any previous listener (safe across View Transitions)
+    const fresh = el.cloneNode(true) as HTMLSelectElement;
+    el.parentNode?.replaceChild(fresh, el);
+
+    fresh.addEventListener("change", (e) => {
       const target = e.target as HTMLSelectElement;
       const selectedOption = target.options[target.selectedIndex];
       const locale = selectedOption.dataset.locale;
       const newUrl = target.value;
 
-      // Actualizar la cookie de preferencia de idioma
       if (locale) {
-        const maxAge = 60 * 60 * 24 * 365; // 1 año
+        const maxAge = 60 * 60 * 24 * 365;
         document.cookie = `preferred-locale=${locale}; path=/; max-age=${maxAge}; SameSite=Lax`;
       }
 
-      // Navegar a la nueva URL
       window.location.href = newUrl;
     });
   }
+
+  initLanguageSelector();
+  document.addEventListener("astro:page-load", initLanguageSelector);
 </script>

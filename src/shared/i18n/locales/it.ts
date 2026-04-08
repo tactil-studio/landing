@@ -34,8 +34,13 @@ export const it: AllTranslationsKeys = {
 	unclear_maintenance_costs: "Costi sorpresa ogni mese",
 	time_lost: "Il tuo tempo perso",
 	highlighted_projects: "Progetti in evidenza",
+	view_all_projects: "Vedi tutti i progetti",
+	projects_page_title: "Progetti",
+	projects_page_description:
+		"Tutti i progetti che abbiamo realizzato per i nostri clienti.",
 
 	// pricing
+	per_project: "/ progetto",
 	prices_subtitle: "Scegli quello che si adatta meglio alla tua attività",
 	pack_1_title: "Sito per la tua attività",
 	pack_1_description:

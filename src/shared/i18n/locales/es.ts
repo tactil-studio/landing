@@ -31,7 +31,12 @@ export const es: AllTranslationsKeys = {
 	time_lost: "Tu tiempo perdido",
 	highlighted_projects: "Proyectos destacados",
 	projects_subtitle: "Proyectos reales que generan resultados reales",
+	view_all_projects: "Ver todos los proyectos",
+	projects_page_title: "Proyectos",
+	projects_page_description:
+		"Todos los proyectos que hemos construido para nuestros clientes.",
 	// pricing
+	per_project: "/ proyecto",
 	prices_subtitle: "Elige el que mejor se adapte a tu negocio",
 	pack_1_title: "Web para tu negocio",
 	pack_1_description:

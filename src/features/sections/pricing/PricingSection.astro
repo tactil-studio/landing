@@ -1,9 +1,14 @@
 ---
 import { useT } from "~/shared/i18n/fn";
 import type { TranslationKey } from "~/shared/i18n/types";
+import Link from "~/shared/ui/link.astro";
+
 const t = useT(Astro.currentLocale);
+const l = Astro.currentLocale;
+
 type Pricing = {
   id: string;
+  isPopular?: boolean;
   oldPrice?: number;
   price?: number;
   title: TranslationKey;
@@ -11,56 +16,64 @@ type Pricing = {
   features: TranslationKey[];
   cta: TranslationKey;
 };
+
 const pricingPacks: Pricing[] = [
   {
-    id: "corporate",
+    id: "business",
     oldPrice: 1499,
     price: 699,
     title: "pack_1_title",
     description: "pack_1_description",
-    features: [
-      "pack_1_feature_1",
-      "pack_1_feature_2",
-      "pack_1_feature_3",
-      "pack_1_feature_4",
-      "pack_1_feature_5",
-    ],
+    features: ["pack_1_feature_1","pack_1_feature_2","pack_1_feature_3","pack_1_feature_4","pack_1_feature_5"],
     cta: "pack_1_cta",
   },
   {
     id: "landing",
+    isPopular: true,
     oldPrice: 799,
     price: 499,
     title: "pack_2_title",
     description: "pack_2_description",
-    features: [
-      "pack_2_feature_1",
-      "pack_2_feature_2",
-      "pack_2_feature_3",
-      "pack_2_feature_4",
-      "pack_2_feature_5",
-    ],
+    features: ["pack_2_feature_1","pack_2_feature_2","pack_2_feature_3","pack_2_feature_4","pack_2_feature_5"],
     cta: "pack_2_cta",
   },
   {
     id: "custom",
     title: "pack_3_title",
     description: "pack_3_description",
-    features: [
-      "pack_3_feature_1",
-      "pack_3_feature_2",
-      "pack_3_feature_3",
-      "pack_3_feature_4",
-      "pack_3_feature_5",
-    ],
+    features: ["pack_3_feature_1","pack_3_feature_2","pack_3_feature_3","pack_3_feature_4","pack_3_feature_5"],
     cta: "pack_3_cta",
   },
 ];
+
+const pricingSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: t("prices"),
+  itemListElement: pricingPacks
+    .filter((p) => p.price)
+    .map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      item: {
+        "@type": "Offer",
+        name: t(p.title),
+        description: t(p.description),
+        price: String(p.price),
+        priceCurrency: "EUR",
+        availability: "https://schema.org/InStock",
+        url: `${Astro.url.origin}${l && l !== "en" ? `/${l}` : ""}/#pricing`,
+      },
+    })),
+};
 ---
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify(pricingSchema)} />
 
 <section
   id="pricing"
-  class="flex flex-col gap-12 py-24 px-4 mx-auto max-w-7xl xl:px-10"
+  aria-labelledby="pricing-heading"
+  class="flex flex-col gap-12 py-24 px-6 mx-auto max-w-7xl xl:px-10"
 >
   <header
     class="flex flex-col gap-4 text-center"
@@ -68,7 +81,7 @@ const pricingPacks: Pricing[] = [
     data-speed="normal"
     data-easing="soft"
   >
-    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+    <h2 id="pricing-heading" class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
       {t("prices")}
     </h2>
     <p class="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -80,7 +93,7 @@ const pricingPacks: Pricing[] = [
     data-stagger="120"
   >
     {
-      pricingPacks.map((pricing, index) => (
+      pricingPacks.map((pricing) => (
         <li
           data-reveal="bottom"
           data-easing="soft"
@@ -89,32 +102,35 @@ const pricingPacks: Pricing[] = [
             {
               "grid-rows-[auto_1fr_auto]": pricing.oldPrice || pricing.price,
               "grid-rows-[1fr_auto]": !pricing.oldPrice && !pricing.price,
-              "border-primary shadow-lg scale-105": index === 1,
-              "last:bg-gradient-to-br last:from-primary/5 last:to-secondary/5":
-                index === 2,
+              "border-primary ring-2 ring-primary shadow-lg": pricing.isPopular,
+              "bg-linear-to-br from-primary/5 to-secondary/5": pricing.id === "custom",
             },
           ]}
         >
-          {index === 1 && (
-            <div class="absolute top-0 right-0 bg-primary text-background text-xs font-bold px-4 py-2 rounded-bl-xl uppercase tracking-wide">
+          {pricing.isPopular && (
+            <div
+              aria-label={t("popular")}
+              class="absolute top-0 right-0 bg-primary text-background text-xs font-bold px-4 py-2 rounded-bl-xl rounded-tr-2xl uppercase tracking-wide"
+            >
               {t("popular")}
             </div>
           )}
 
           {(pricing.oldPrice || pricing.price) && (
-            <header class="flex flex-col pb-6 border-b border-border">
+            <div class="flex flex-col pb-6 border-b border-border">
               {pricing.oldPrice && (
-                <span class="line-through text-sm text-muted-foreground">
-                  {pricing.oldPrice}€
+                <span class="text-sm text-muted-foreground">
+                  <span class="sr-only">Original price: </span>
+                  <span class="line-through" aria-hidden="true">{pricing.oldPrice}€</span>
                 </span>
               )}
               {pricing.price && (
                 <div class="flex items-baseline gap-1">
                   <span class="text-4xl font-bold">{pricing.price}€</span>
-                  <span class="text-sm text-muted-foreground">/ proyecto</span>
+                  <span class="text-sm text-muted-foreground">{t("per_project")}</span>
                 </div>
               )}
-            </header>
+            </div>
           )}
           <div class="flex flex-col gap-6 py-6">
             <div>
@@ -123,14 +139,16 @@ const pricingPacks: Pricing[] = [
                 {t(pricing.description)}
               </p>
             </div>
-            <ul class="flex flex-col gap-3">
+            <ul class="flex flex-col gap-3" role="list">
               {pricing.features.map((feature) => (
                 <li class="flex items-start gap-3 text-sm">
                   <svg
-                    class="w-5 h-5 text-primary flex-shrink-0 mt-0.5"
+                    class="w-5 h-5 text-primary shrink-0 mt-0.5"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
+                    focusable="false"
                   >
                     <path
                       stroke-linecap="round"
@@ -144,14 +162,16 @@ const pricingPacks: Pricing[] = [
               ))}
             </ul>
           </div>
-          <footer class="flex gap-2 items-center pt-4">
-            <a
+          <div class="flex gap-2 items-center pt-4">
+            <Link
               href="#contact"
-              class="pricing-cta w-full text-center rounded-full bg-primary px-6 py-3 text-background font-semibold hover:brightness-95 active:scale-[0.98] transition-all shadow-sm hover:shadow-md"
+              variant="primary"
+              class="w-full text-center"
+              aria-label={`${t(pricing.cta)} — ${t(pricing.title)}`}
             >
               {t(pricing.cta)}
-            </a>
-          </footer>
+            </Link>
+          </div>
         </li>
       ))
     }

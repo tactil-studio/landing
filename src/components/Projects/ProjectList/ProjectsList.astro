@@ -1,8 +1,11 @@
 ---
 import { getProjects } from "~/lib/projects";
 import { t } from "~/shared/i18n/fn";
+import Button from "~/shared/ui/button.astro";
 import ProjectListItem from "./ProjectListItem.astro";
+
 const l = Astro.currentLocale;
+const prefix = !l || l === "en" ? "" : `/${l}`;
 
 type Props = {
   limit?: number;
@@ -13,7 +16,7 @@ const projects = getProjects(limit);
 
 <section
   class="flex flex-col gap-16 max-md:gap-8 mx-auto max-w-7xl px-6 xl:px-10 h-full"
-  id="portafolio"
+  id="work"
 >
   <header
     class="flex flex-col gap-4"
@@ -32,4 +35,16 @@ const projects = getProjects(limit);
   <ul class="flex flex-col gap-12 w-full h-full" data-stagger="150">
     {projects.map((p) => <ProjectListItem p={p} />)}
   </ul>
+
+  {
+    limit && (
+      <div class="flex justify-center" data-reveal="bottom" data-easing="soft">
+        <a href={`${prefix}/projects`}>
+          <Button withArrow variant="outline">
+            {t(l, "view_all_projects")}
+          </Button>
+        </a>
+      </div>
+    )
+  }
 </section>
